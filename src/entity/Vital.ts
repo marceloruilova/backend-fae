@@ -11,6 +11,9 @@ export class Vital {
 
     @Column()
     temperature: string;
+    
+    @Column()
+    temp: string;
 
     @Column()
     tensionArterial: string;
