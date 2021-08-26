@@ -6,7 +6,9 @@ import {Request, Response} from "express";
 import {Routes} from "./routes";
 import {User} from "./entity/User";
 import {Hce} from "./entity/Hce";
+import {Evolution} from "./entity/Evolution";
 import {Vital} from "./entity/Vital";
+import {Doctor} from "./entity/Doctor";
 
 createConnection().then(async connection => {
 
@@ -35,10 +37,25 @@ createConnection().then(async connection => {
 
     // insert new data for test
 
+    //insert doctor
+    const doctor=new Doctor();
+    doctor.date="08/05";
+    doctor.temperature="5";
+    doctor.temp="3"
+    doctor.tensionArterial="8";
+    await connection.manager.save(doctor);
+
+    //insert evolution
+    const evolution=new Evolution();
+    evolution.firstName="08/05";
+    evolution.lastName="5";
+    evolution.prescribing_doctor=doctor;
+    await connection.manager.save(evolution);
     //insert vital
     const vital1=new Vital();
     vital1.date="08/05";
     vital1.temperature="5";
+    vital1.temp="3"
     vital1.tensionArterial="8";
     await connection.manager.save(vital1);
 
@@ -47,6 +64,7 @@ createConnection().then(async connection => {
     hce1.firstName = "John.jpg";
     hce1.lastName = "John.jpg";
     hce1.vitals=vital1;
+    hce1.evolution=[evolution];
     await connection.manager.save(hce1);
 
     const hce2 = new Hce();

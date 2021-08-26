@@ -1,6 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn,OneToMany} from "typeorm";
 import {User} from "./User";
 import { Vital } from "./Vital";
+import { Evolution } from "./Evolution";
 
 @Entity()
 export class Hce {
@@ -21,4 +22,6 @@ export class Hce {
     @JoinColumn()
     vitals: Vital;
 
+    @OneToMany(() => Evolution, evolution => evolution.hce)
+    evolution: Evolution[];
 }

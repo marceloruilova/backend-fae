@@ -9,7 +9,12 @@ export class UserController {
     private hceRepository = getRepository(Hce);
 
     async all(request: Request, response: Response, next: NextFunction) {
-        const aux=await this.userRepository.find({relations:["historialelectronico","historialelectronico.vitals"]});
+        const aux=await this.userRepository.find(
+                                            {relations:
+                                            ["historialelectronico",
+                                            "historialelectronico.vitals",
+                                            "historialelectronico.evolution",
+                                            "historialelectronico.evolution.prescribing_doctor",]});
         return aux;
     }
 
