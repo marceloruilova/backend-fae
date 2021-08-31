@@ -8,14 +8,14 @@ export class Hce {
 
     @PrimaryGeneratedColumn()
     id: number;
-
+    //heredar de usuario nombre y apellido
     @Column()
     firstName: string;
 
     @Column()
     lastName: string;
 
-    @ManyToOne(() => User, user => user.historialelectronico)
+    @ManyToOne(() => User, user => user.electronic_history)
     user: User;
 
     @OneToOne(() => Vital)

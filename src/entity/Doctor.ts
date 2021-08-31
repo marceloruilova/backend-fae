@@ -1,4 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn} from "typeorm";
+import {Inventory} from "./Inventory";
+import {Prescription} from "./Prescription";
 
 @Entity()
 export class Doctor {
@@ -7,15 +9,24 @@ export class Doctor {
     id: number;
 
     @Column()
-    date: string;
+    doctor_first_name: string;
 
     @Column()
-    temperature: string;
+    doctor_last_name: string;
+
+    @Column()
+    ci: string;
     
     @Column()
-    temp: string;
-
+    title: string;
+    //heredar especialidad
     @Column()
-    tensionArterial: string;
-
+    especiality: string;
+    
+    @ManyToOne(() => Inventory, inventory => inventory.doctor)
+    inventory: Inventory;
+    
+    @OneToOne(() => Prescription)
+    @JoinColumn()
+    prescription: Prescription;
 }

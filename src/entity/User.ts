@@ -16,7 +16,19 @@ export class User {
     @Column()
     age: number;
 
+    @Column({type:'varchar2'})
+    gender: string;
+
+    @Column()
+    e_mail: string;
+
+    @Column({type:'timetz'})
+    appointment_hour: number;
+
+    @Column()
+    type: string;
+
     @OneToMany(() => Hce, hce => hce.user)
-    historialelectronico: Hce[];
+    electronic_history: Hce[];
 
 }
