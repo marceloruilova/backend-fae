@@ -8,13 +8,19 @@ export class Inventory {
     id: number;
 
     @Column()
-    firstName: string;
+    stock: string;
 
     @Column()
-    lastName: string;
+    name: string;
 
     @Column()
-    age: number;
+    presentation: string;
+
+    @Column()
+    concentration: string;
+
+    @Column()
+    due_date: Date;
 
     @OneToMany(() => Doctor, doctor => doctor.inventory)
     doctor: Doctor[];

@@ -1,5 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
-import {Doctor} from "./Doctor";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 @Entity()
 export class Prescription {
@@ -8,12 +7,14 @@ export class Prescription {
     id: number;
 
     @Column()
-    firstName: string;
+    cie10: string;
 
     @Column()
-    lastName: string;
+    disease: string;
 
     @Column()
-    age: number;
-
+    price: string;
+   
+    @Column()
+    ticker_number: string;
 }

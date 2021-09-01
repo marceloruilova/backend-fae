@@ -9,6 +9,9 @@ import {Hce} from "./entity/Hce";
 import {Evolution} from "./entity/Evolution";
 import {Vital} from "./entity/Vital";
 import {Doctor} from "./entity/Doctor";
+import {Prescription} from "./entity/Prescription";
+import {Psicology} from "./entity/Psicology";
+import {Inventory} from "./entity/Inventory";
 
 createConnection().then(async connection => {
 

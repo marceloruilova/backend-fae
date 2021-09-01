@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn,On
 import {User} from "./User";
 import { Vital } from "./Vital";
 import { Evolution } from "./Evolution";
+import { Psicology } from "./Psicology";
 
 @Entity()
 export class Hce {
@@ -24,4 +25,7 @@ export class Hce {
 
     @OneToMany(() => Evolution, evolution => evolution.hce)
     evolution: Evolution[];
+
+    @OneToMany(() => Psicology, psicology => psicology.hce)
+    psicology: Psicology[];
 }
