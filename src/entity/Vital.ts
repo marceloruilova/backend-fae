@@ -7,15 +7,36 @@ export class Vital {
     id: number;
 
     @Column()
-    date: string;
+    especiality: string;
+
+    @Column({ type: 'timestamp' })
+    date_time_with_timezone: string;
+
+    @Column({ type: 'timestamp' })
+    attention_hour: string;
+    
+    @Column({type:'decimal'})
+    temperature: number;
+
+    @Column({type:'decimal'})
+    arterial_tension: number;
 
     @Column()
-    temperature: string;
+    fc: string;
     
     @Column()
-    temp: string;
+    fr: string;
 
-    @Column()
-    tensionArterial: string;
+    @Column({type:'decimal'})
+    spo2: number;
+
+    @Column({type:'decimal'})
+    height: number;
+
+    @Column({type:'decimal'})
+    weight: number;
+
+    @Column({type:'decimal'})
+    pc: number;
 
 }

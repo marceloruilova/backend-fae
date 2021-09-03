@@ -1,9 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany,OneToOne,JoinColumn} from "typeorm";
 import {Hce} from "./Hce";
 import {Doctor} from "./Doctor";
 
 @Entity()
-export class Evolution {
+export class Odontology {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -12,10 +12,13 @@ export class Evolution {
     firstName: string;
 
     @Column()
-    lastName: string;
+    actual_disease: string;
 
-    @ManyToOne(() => Hce, hce => hce.evolution)
-    hce: Hce;
+    @Column()
+    record: string;
+
+    @Column()
+    odontogram: string;
 
     @OneToMany(() => Doctor, doctor => doctor.prescription)
     prescribing_doctor: Doctor[];

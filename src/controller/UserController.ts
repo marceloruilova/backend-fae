@@ -14,7 +14,13 @@ export class UserController {
                                             ["historialelectronico",
                                             "historialelectronico.vitals",
                                             "historialelectronico.evolution",
-                                            "historialelectronico.evolution.prescribing_doctor",]});
+                                            "historialelectronico.odontology",
+                                            "historialelectronico.evolution.prescribing_doctor",
+                                            "historialelectronico.odontology.prescribing_doctor",
+                                            "historialelectronico.evolution.prescribing_doctor.prescription",
+                                            "historialelectronico.odontology.prescribing_doctor.prescription",
+                                            "historialelectronico.evolution.prescribing_doctor.inventory",
+                                            "historialelectronico.odontology.prescribing_doctor.inventory",]});
         return aux;
     }
 

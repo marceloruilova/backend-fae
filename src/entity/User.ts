@@ -7,6 +7,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
+
     @Column()
     firstName: string;
 
@@ -15,6 +16,18 @@ export class User {
 
     @Column()
     age: number;
+
+    @Column({type:'varchar2'})
+    gender: string;
+
+    @Column()
+    e_mail: string;
+
+    @Column()
+    appointment_hour: number;
+
+    @Column()
+    type: string;
 
     @OneToMany(() => Hce, hce => hce.user)
     historialelectronico: Hce[];
