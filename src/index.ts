@@ -49,14 +49,6 @@ createConnection().then(async connection => {
    inventory.concentration="8";
    await connection.manager.save(inventory);   
 
-    //insert prescription
-    const prescription=new Prescription();
-    prescription.cie10="08/05";
-    prescription.disease="5";
-    prescription.price="3"
-    prescription.ticker_number="8";
-    await connection.manager.save(prescription);
-
     //insert doctor
     const doctor=new Doctor();
     doctor.doctor_first_name="Marco";
@@ -64,22 +56,39 @@ createConnection().then(async connection => {
     doctor.especiality="Odontología";
     doctor.ci="1721515";
     doctor.title="Odontología";
-    doctor.prescription=prescription;
     doctor.inventory=inventory;
     await connection.manager.save(doctor);
  
+    //insert prescription
+    const prescription=new Prescription();
+    prescription.cie10="08/05";
+    prescription.disease="5";
+    prescription.price="3"
+    prescription.prescribing_doctor=doctor;
+    prescription.ticker_number="8";
+    await connection.manager.save(prescription);
+
+    const prescription2=new Prescription();
+    prescription2.cie10="08/05";
+    prescription2.disease="5";
+    prescription2.price="3"
+    prescription2.prescribing_doctor=doctor;
+    prescription2.ticker_number="8";
+    await connection.manager.save(prescription2);
+
     //insert odontology
     const odontology=new Odontology();
     odontology.firstName="08/05";
     odontology.actual_disease="Gripe";
     odontology.odontogram="5";
+    odontology.prescription=prescription;
     odontology.record="La madre tiene menopausia";
-    odontology.prescribing_doctor=doctor;
     await connection.manager.save(odontology);
 
     const odontology2=new Odontology();
     odontology2.firstName="Persona";
     odontology2.actual_disease="Ninguna";
+    odontology2.prescription=prescription2;
     odontology2.odontogram="7";
     odontology2.record="Padre enfermo";
     await connection.manager.save(odontology2);
@@ -88,8 +97,15 @@ createConnection().then(async connection => {
     const evolution=new Evolution();
     evolution.firstName="08/05";
     evolution.lastName="5";
-    evolution.prescribing_doctor=doctor;
+    evolution.prescription=prescription;
     await connection.manager.save(evolution);
+    
+    const evolution2=new Evolution();
+    evolution2.firstName="08/05";
+    evolution2.lastName="5";
+    evolution2.prescription=prescription2;
+    await connection.manager.save(evolution2);
+
     //insert vital
     const vital1=new Vital();
     vital1.especiality="Odontología";
@@ -125,7 +141,7 @@ createConnection().then(async connection => {
     hce1.lastName = "Torres";
     hce1.odontology=odontology;
     hce1.vitals=vital1;
-    hce1.evolution=[evolution];
+    hce1.evolution=[evolution2];
     await connection.manager.save(hce1);
 
     const hce2 = new Hce();
@@ -133,6 +149,7 @@ createConnection().then(async connection => {
     hce2.lastName = "Mecarito";
     hce2.odontology=odontology2;
     hce2.vitals=vital2;
+    hce2.evolution=[evolution];
     await connection.manager.save(hce2);
 
     //insert user
@@ -147,6 +164,6 @@ createConnection().then(async connection => {
     user.historialelectronico = [hce1,hce2];
     await connection.manager.save(user);
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
+    console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
 }).catch(error => console.log(error));

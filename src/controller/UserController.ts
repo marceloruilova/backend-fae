@@ -15,17 +15,26 @@ export class UserController {
                                             "historialelectronico.vitals",
                                             "historialelectronico.evolution",
                                             "historialelectronico.odontology",
-                                            "historialelectronico.evolution.prescribing_doctor",
-                                            "historialelectronico.odontology.prescribing_doctor",
-                                            "historialelectronico.evolution.prescribing_doctor.prescription",
-                                            "historialelectronico.odontology.prescribing_doctor.prescription",
-                                            "historialelectronico.evolution.prescribing_doctor.inventory",
-                                            "historialelectronico.odontology.prescribing_doctor.inventory",]});
+                                            "historialelectronico.evolution.prescription",
+                                            "historialelectronico.odontology.prescription",
+                                            "historialelectronico.evolution.prescription.prescribing_doctor",
+                                            "historialelectronico.odontology.prescription.prescribing_doctor",
+                                            ]});
         return aux;
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.findOne(request.params.id);
+        return this.userRepository.findOne(request.params.id,
+                                        {relations:
+                                        ["historialelectronico",
+                                        "historialelectronico.vitals",
+                                        "historialelectronico.evolution",
+                                        "historialelectronico.odontology",
+                                        "historialelectronico.evolution.prescription",
+                                        "historialelectronico.odontology.prescription",
+                                        "historialelectronico.evolution.prescription.prescribing_doctor",
+                                        "historialelectronico.odontology.prescription.prescribing_doctor",
+                                        ]});
     }
 
     async save(request: Request, response: Response, next: NextFunction) {

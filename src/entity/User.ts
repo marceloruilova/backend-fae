@@ -7,7 +7,6 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-
     @Column()
     firstName: string;
 
@@ -29,7 +28,7 @@ export class User {
     @Column()
     type: string;
 
-    @OneToMany(() => Hce, hce => hce.user)
+    @OneToMany(() => Hce, hce => hce.user,{cascade:true})
     historialelectronico: Hce[];
 
 }

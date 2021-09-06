@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column,ManyToOne,OneToOne,JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column,ManyToOne,OneToMany,JoinColumn} from "typeorm";
 import {Inventory} from "./Inventory";
 import {Prescription} from "./Prescription";
 
@@ -26,7 +26,7 @@ export class Doctor {
     @ManyToOne(() => Inventory, inventory => inventory.doctor)
     inventory: Inventory;
         
-    @OneToOne(() => Prescription)
-    @JoinColumn()
-    prescription: Prescription;
+    @OneToMany(()=>Prescription,prescription=>prescription.prescribing_doctor)
+    prescription:Prescription;
 }
+
