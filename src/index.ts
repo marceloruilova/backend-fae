@@ -4,6 +4,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
+import {validate} from "class-validator";
 import {User} from "./entity/User";
 import {Hce} from "./entity/Hce";
 import {Evolution} from "./entity/Evolution";
@@ -137,16 +138,12 @@ createConnection().then(async connection => {
 
     //insert hces
     const hce1 = new Hce();
-    hce1.firstName = "Pepe";
-    hce1.lastName = "Torres";
     hce1.odontology=odontology;
     hce1.vitals=vital1;
     hce1.evolution=[evolution2];
     await connection.manager.save(hce1);
 
     const hce2 = new Hce();
-    hce2.firstName = "Pablo";
-    hce2.lastName = "Mecarito";
     hce2.odontology=odontology2;
     hce2.vitals=vital2;
     hce2.evolution=[evolution];
@@ -154,15 +151,22 @@ createConnection().then(async connection => {
 
     //insert user
     const user = new User();
+    user.ci="1234567890";
     user.firstName = "Pepe";
     user.lastName="Torres";
     user.age=2;
     user.gender='M';
     user.e_mail="pepe@gmail.com";
-    user.appointment_hour=7;
+    user.appointment_hour="07:00";
     user.type="ISSFA";
+    user.asigned_speciality="Ginecologia";
     user.historialelectronico = [hce1,hce2];
-    await connection.manager.save(user);
+    /*const errors = await validate(user);
+    if (errors.length > 0) {
+        throw new Error(`Validation failed!`); 
+    } else {*/
+        await connection.manager.save(user);
+   /* }*/
 
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
