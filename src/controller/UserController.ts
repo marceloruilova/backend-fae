@@ -1,12 +1,10 @@
-import {getRepository} from "typeorm";
+import {getRepository,LessThan} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
-import {Hce} from "../entity/Hce";
 
 export class UserController {
 
     private userRepository = getRepository(User);
-    private hceRepository = getRepository(Hce);
 
     async all(request: Request, response: Response, next: NextFunction) {
         const aux=await this.userRepository.find(
@@ -20,6 +18,14 @@ export class UserController {
                                             "historialelectronico.evolution.prescription.prescribing_doctor",
                                             "historialelectronico.odontology.prescription.prescribing_doctor",
                                             ]});
+        return aux;
+    }
+    
+    //get users by date
+    async bydate(request: Request, response: Response, next: NextFunction) {
+        const timeElapsed = new Date();
+        const today = timeElapsed.toISOString().substring(0,10);
+        const aux=await this.userRepository.find({where:{appointment_date:today}});
         return aux;
     }
 

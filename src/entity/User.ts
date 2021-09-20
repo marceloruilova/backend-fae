@@ -1,6 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
-import {Contains, IsInt, Length, IsEmail, MinLength,MaxLength, Min, Max, IsMilitaryTime} from "class-validator";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, Timestamp} from "typeorm";
+import {Contains,Length, IsEmail, MinLength,MaxLength, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 import {Hce}from "./Hce";
+import { isDate } from "util";
 
 @Entity()
 export class User {
@@ -9,7 +10,7 @@ export class User {
     id: number;
 
     @Column({unique:true})
-    @IsInt()
+    @IsNumberString()
     @Length(10,10)
     ci: string;
 
@@ -21,21 +22,25 @@ export class User {
     @Length(2, 25)
     lastName: string;
 
-    @Column()
+    @Column({nullable:true})
     @Min(0)
     @Max(120)
     age: number;
 
-    @Column({type:'varchar2'})
+    @Column({type:'varchar2',nullable:true})
     gender: string;
 
-    @Column()
+    @Column({nullable:true})
     @IsEmail()
     e_mail: string;
 
     @Column()
     @IsMilitaryTime()
     appointment_hour: string;
+
+    @Column()
+    @IsDateString()
+    appointment_date: string;
 
     @Column()
     @Contains('ISSFA')

@@ -10,6 +10,11 @@ export const Routes = [
     route: "/users",
     controller: UserController,
     action: "all"
+},{
+    method: "get",
+    route: "/users/date",
+    controller: UserController,
+    action: "bydate"
 }, {
     method: "get",
     route: "/users/:id",
@@ -44,6 +49,12 @@ export const Routes = [
     action: "save"
 }, {
     method: "delete",
+    route: "/hces/:id",
+    controller: HceController,
+    action: "remove"
+}, //save vital, create hce
+{
+    method: "post",
     route: "/hces/:id",
     controller: HceController,
     action: "remove"

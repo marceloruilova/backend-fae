@@ -18,8 +18,9 @@ createConnection().then(async connection => {
 
     // create express app
     const app = express();
+    var cors = require('cors');
     app.use(bodyParser.json());
-
+    app.use(cors());
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
@@ -41,7 +42,10 @@ createConnection().then(async connection => {
 
     // insert new data for test
     
-   //insert inventory
+    const timeElapsed = new Date();
+    const today = timeElapsed.toISOString().substring(0,10);
+
+    //insert inventory
    const inventory=new Inventory();
    inventory.due_date="08/05";
    inventory.name="5";
@@ -151,22 +155,23 @@ createConnection().then(async connection => {
 
     //insert user
     const user = new User();
-    user.ci="1234567890";
+    user.ci="1124542607";
     user.firstName = "Pepe";
     user.lastName="Torres";
     user.age=2;
     user.gender='M';
     user.e_mail="pepe@gmail.com";
     user.appointment_hour="07:00";
+    user.appointment_date=today;
     user.type="ISSFA";
     user.asigned_speciality="Ginecologia";
     user.historialelectronico = [hce1,hce2];
-    /*const errors = await validate(user);
+    const errors = await validate(user);
     if (errors.length > 0) {
         throw new Error(`Validation failed!`); 
-    } else {*/
+    } else {
         await connection.manager.save(user);
-   /* }*/
+    }
 
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
