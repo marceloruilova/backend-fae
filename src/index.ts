@@ -114,12 +114,15 @@ createConnection().then(async connection => {
     //insert vital
     const vital1=new Vital();
     vital1.especiality="Odontología";
-    vital1.date_time_with_timezone="5";
-    vital1.attention_hour="3";
-    vital1.temperature=5.5;
-    vital1.arterial_tension=5.8;
-    vital1.fc="5 to 8";
-    vital1.fr="5 to 9";
+    vital1.attention_hour="07:20";
+    vital1.temperature_end=70.5;
+    vital1.temperature_start=65.8;
+    vital1.sistolica=120;
+    vital1.diastolica=115;
+    vital1.fc_end=11.5;
+    vital1.fc_start=9.5;
+    vital1.fr_end=8.8;
+    vital1.fr_start=6.9;
     vital1.spo2=8.6;
     vital1.height=1.75;
     vital1.weight=85;
@@ -128,50 +131,51 @@ createConnection().then(async connection => {
 
     const vital2=new Vital();
     vital2.especiality="Ginecologia";
-    vital2.date_time_with_timezone="5";
-    vital2.attention_hour="3";
-    vital2.temperature=7.5;
-    vital2.arterial_tension=5.8;
-    vital2.fc="5 to 8";
-    vital2.fr="5 to 9";
+    vital2.attention_hour="07:20";
+    vital2.temperature_end=7.5;
+    vital2.temperature_start=5.8;
+    vital2.sistolica=115;
+    vital2.diastolica=130;
+    vital2.fc_end=6.5;
+    vital2.fc_start=5.5;
+    vital2.fr_end=7.8;
+    vital2.fr_start=5.9;
     vital2.spo2=8.6;
     vital2.height=1.75;
     vital2.weight=85;
     vital2.pc=6.8;
     await connection.manager.save(vital2);
-
-    //insert hces
-    const hce1 = new Hce();
-    hce1.odontology=odontology;
-    hce1.vitals=vital1;
-    hce1.evolution=[evolution2];
-    await connection.manager.save(hce1);
-
-    const hce2 = new Hce();
-    hce2.odontology=odontology2;
-    hce2.vitals=vital2;
-    hce2.evolution=[evolution];
-    await connection.manager.save(hce2);
-
     //insert user
     const user = new User();
-    user.ci="1124542607";
+    user.ci="1134580017";
     user.firstName = "Pepe";
     user.lastName="Torres";
     user.age=2;
     user.gender='M';
     user.e_mail="pepe@gmail.com";
-    user.appointment_hour="07:00";
+    user.appointment_hour="07:01";
     user.appointment_date=today;
     user.type="ISSFA";
     user.asigned_speciality="Ginecologia";
-    user.historialelectronico = [hce1,hce2];
     const errors = await validate(user);
     if (errors.length > 0) {
         throw new Error(`Validation failed!`); 
     } else {
         await connection.manager.save(user);
     }
+
+    //insert hces
+    const hce1 = new Hce();
+    hce1.vitals=vital1;
+    hce1.user=user;
+    await connection.manager.save(hce1);
+
+    /*const hce2 = new Hce();
+    hce2.odontology=odontology2;
+    hce2.vitals=vital2;
+    hce2.evolution=[evolution];
+    await connection.manager.save(hce2);*/
+
 
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 

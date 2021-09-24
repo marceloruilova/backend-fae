@@ -1,4 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 
 @Entity()
 export class Vital {
@@ -9,24 +10,34 @@ export class Vital {
     @Column()
     especiality: string;
 
-    @Column({ type: 'timestamp' })
-    date_time_with_timezone: string;
-
-    @Column({ type: 'timestamp' })
+    @Column()
+    @IsMilitaryTime()
     attention_hour: string;
-    
-    @Column({type:'decimal'})
-    temperature: number;
 
     @Column({type:'decimal'})
-    arterial_tension: number;
+    temperature_start: number;
+
+    @Column({type:'decimal'})
+    temperature_end: number;
 
     @Column()
-    fc: string;
+    sistolica: number;
+
+    @Column()
+    diastolica: number;
+
+    @Column({type:'decimal'})
+    fc_start: number;
+
+    @Column({type:'decimal'})
+    fc_end: number;
+
+    @Column({type:'decimal'})
+    fr_start: number;
+
+    @Column({type:'decimal'})
+    fr_end: number;
     
-    @Column()
-    fr: string;
-
     @Column({type:'decimal'})
     spo2: number;
 

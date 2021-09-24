@@ -10,10 +10,10 @@ export class Hce {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => User, user => user.historialelectronico)
+    @ManyToOne(() => User, user => user.historialelectronico,{cascade:true})
     user: User;
 
-    @OneToOne(() => Vital)
+    @OneToOne(() => Vital,{cascade:true})
     @JoinColumn()
     vitals: Vital;
     

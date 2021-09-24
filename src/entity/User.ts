@@ -1,7 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, Timestamp} from "typeorm";
 import {Contains,Length, IsEmail, MinLength,MaxLength, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 import {Hce}from "./Hce";
-import { isDate } from "util";
 
 @Entity()
 export class User {
@@ -27,7 +26,7 @@ export class User {
     @Max(120)
     age: number;
 
-    @Column({type:'varchar2',nullable:true})
+    @Column({nullable:true})
     gender: string;
 
     @Column({nullable:true})
@@ -49,7 +48,7 @@ export class User {
     @Column()
     asigned_speciality: string;
 
-    @OneToMany(() => Hce, hce => hce.user,{cascade:true})
+    @OneToMany(() => Hce, hce => hce.user)
     historialelectronico: Hce[];
 
 }

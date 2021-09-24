@@ -5,9 +5,9 @@ import {Hce} from "../entity/Hce";
 export class HceController {
 
     private hceRepository = getRepository(Hce);
-
+    
     async all(request: Request, response: Response, next: NextFunction) {
-        return this.hceRepository.find({relations:["user"]});
+        return this.hceRepository.find({relations:["vitals","user"]});
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
