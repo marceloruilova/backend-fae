@@ -1,55 +1,58 @@
 import {getRepository,LessThan} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/User";
+import { validate } from "class-validator";
 
 export class UserController {
 
     private userRepository = getRepository(User);
 
     async all(request: Request, response: Response, next: NextFunction) {
-        const aux=await this.userRepository.find(
-                                            {relations:
-                                            ["historialelectronico",
-                                            "historialelectronico.vitals",
-                                            "historialelectronico.evolution",
-                                            "historialelectronico.odontology",
-                                            "historialelectronico.evolution.prescription",
-                                            "historialelectronico.odontology.prescription",
-                                            "historialelectronico.evolution.prescription.prescribing_doctor",
-                                            "historialelectronico.odontology.prescription.prescribing_doctor",
-                                            ]});
-        return aux;
-    }
-    
-    //get users by date
-    async bydate(request: Request, response: Response, next: NextFunction) {
-        const timeElapsed = new Date();
-        const today = timeElapsed.toISOString().substring(0,10);
-        const aux=await this.userRepository.find({where:{appointment_date:today}});
+        const aux=await this.userRepository.find({select:["id","username","role"]});
         return aux;
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.findOne(request.params.id,
-                                        {relations:
-                                        ["historialelectronico",
-                                        "historialelectronico.vitals",
-                                        "historialelectronico.evolution",
-                                        "historialelectronico.odontology",
-                                        "historialelectronico.evolution.prescription",
-                                        "historialelectronico.odontology.prescription",
-                                        "historialelectronico.evolution.prescription.prescribing_doctor",
-                                        "historialelectronico.odontology.prescription.prescribing_doctor",
-                                        ]});
+        return this.userRepository.findOneOrFail(request.params.id,{select:["id","username","role"]});
     }
-
+//Add edit
     async save(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.save(request.body);
+        let {username,password,role}=request.body;
+        let user = new User();
+        user.username=username;
+        user.password=password;
+        user.role=role;
+
+        const errors = await validate(user);
+        if (errors.length > 0) {
+            response.status(400).send(errors);
+            return;
+        }
+          //Hash the password, to securely store on DB
+          user.hashPassword();
+          //Try to save. If fails, the username is already in use
+          try {
+            await this.userRepository.save(user);
+          } catch (e) {
+            response.status(409).send("username already in use");
+            return;
+          }
+          //If all ok, send 201 response
+          response.status(201).send("User created");
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
-        let userToRemove = await this.userRepository.findOne(request.params.id);
+        let userToRemove:User;
+        try{
+            userToRemove = await this.userRepository.findOneOrFail(request.params.id);
+        }catch(error){
+            response.status(404).send("User not found");
+            return;
+        }
         await this.userRepository.remove(userToRemove);
+
+        //After all send a 204 (no content, but accepted) response
+        response.status(204).send();
     }
 
 }

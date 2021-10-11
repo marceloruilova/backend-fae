@@ -9,10 +9,7 @@ export class Evolution {
     id: number;
 
     @Column()
-    firstName: string;
-
-    @Column()
-    lastName: string;
+    establishment:string;
 
     @ManyToOne(() => Hce, hce => hce.evolution)
     hce: Hce;

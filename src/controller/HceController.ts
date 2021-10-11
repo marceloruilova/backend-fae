@@ -7,7 +7,7 @@ export class HceController {
     private hceRepository = getRepository(Hce);
     
     async all(request: Request, response: Response, next: NextFunction) {
-        return this.hceRepository.find({relations:["vitals","user"]});
+        return this.hceRepository.find({relations:["vitals","patient"]});
     }
 
     async one(request: Request, response: Response, next: NextFunction) {

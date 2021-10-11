@@ -2,10 +2,10 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import {Request, Response} from "express";
-import {Routes} from "./routes";
+import * as helmet from "helmet";
+import routes from "./routes";
 import {validate} from "class-validator";
-import {User} from "./entity/User";
+import {Patient} from "./entity/Patient";
 import {Hce} from "./entity/Hce";
 import {Evolution} from "./entity/Evolution";
 import {Vital} from "./entity/Vital";
@@ -22,18 +22,9 @@ createConnection().then(async connection => {
     app.use(bodyParser.json());
     app.use(cors());
     // register express routes from defined application routes
-    Routes.forEach(route => {
-        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next);
-            if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
+    //app.use("/",routes);
 
-            } else if (result !== null && result !== undefined) {
-                res.json(result);
-            }
-        });
-    });
-
+    app.use("/",routes);
     // setup express app here
     // ...
 
@@ -100,14 +91,12 @@ createConnection().then(async connection => {
 
     //insert evolution
     const evolution=new Evolution();
-    evolution.firstName="08/05";
-    evolution.lastName="5";
+    evolution.establishment="Ginecologia";
     evolution.prescription=prescription;
     await connection.manager.save(evolution);
     
     const evolution2=new Evolution();
-    evolution2.firstName="08/05";
-    evolution2.lastName="5";
+    evolution2.establishment="Ginecologia";
     evolution2.prescription=prescription2;
     await connection.manager.save(evolution2);
 
@@ -145,30 +134,35 @@ createConnection().then(async connection => {
     vital2.weight=85;
     vital2.pc=6.8;
     await connection.manager.save(vital2);
-    //insert user
-    const user = new User();
-    user.ci="1134580017";
-    user.firstName = "Pepe";
-    user.lastName="Torres";
-    user.age=2;
-    user.gender='M';
-    user.e_mail="pepe@gmail.com";
-    user.appointment_hour="07:01";
-    user.appointment_date=today;
-    user.type="ISSFA";
-    user.asigned_speciality="Ginecologia";
-    const errors = await validate(user);
+    
+    //insert hces
+    const hce1 = new Hce();
+    hce1.evolution=[evolution,evolution2];
+    hce1.odontology=[odontology,odontology2];
+    await connection.manager.save(hce1);
+
+    //insert patient
+    const patient = new Patient();
+    patient.ci="1134010197";
+    patient.firstName = "Pepe";
+    patient.lastName="Torres";
+    patient.age=2;
+    patient.gender='M';
+    patient.e_mail="pepe@gmail.com";
+    patient.appointment_hour="07:01";
+    patient.appointment_date=today;
+    patient.type="ISSFA";
+    patient.asigned_speciality="Ginecologia";
+    patient.vitals=vital1;
+    patient.electronic_history=hce1;
+
+    const errors = await validate(patient);
     if (errors.length > 0) {
         throw new Error(`Validation failed!`); 
     } else {
-        await connection.manager.save(user);
+        await connection.manager.save(patient);
     }
 
-    //insert hces
-    const hce1 = new Hce();
-    hce1.vitals=vital1;
-    hce1.user=user;
-    await connection.manager.save(hce1);
 
     /*const hce2 = new Hce();
     hce2.odontology=odontology2;

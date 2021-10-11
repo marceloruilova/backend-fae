@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany,OneToOne,JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn} from "typeorm";
 import {Prescription} from "./Prescription";
+import {Hce} from "./Hce";
 
 @Entity()
 export class Odontology {
@@ -18,6 +19,9 @@ export class Odontology {
 
     @Column()
     odontogram: string;
+
+    @ManyToOne(() => Hce, hce => hce.odontology)
+    hce: Hce;
 
     @OneToOne(() => Prescription)
     @JoinColumn()
