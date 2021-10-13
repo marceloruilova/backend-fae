@@ -9,9 +9,6 @@ export class Odontology {
     id: number;
 
     @Column()
-    firstName: string;
-
-    @Column()
     actual_disease: string;
 
     @Column()

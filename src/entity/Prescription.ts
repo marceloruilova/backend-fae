@@ -17,7 +17,7 @@ export class Prescription {
     price: string;
    
     @Column()
-    ticker_number: string;
+    ticket_number: string;
 
     @ManyToOne(() => Doctor,doctor=>doctor.prescription)
     prescribing_doctor: Doctor;

@@ -13,6 +13,7 @@ import {Doctor} from "./entity/Doctor";
 import {Odontology} from "./entity/Odontology";
 import { Inventory } from "./entity/Inventory";
 import { Prescription } from "./entity/Prescription";
+import { Info } from "./entity/Info";
 
 createConnection().then(async connection => {
 
@@ -61,7 +62,7 @@ createConnection().then(async connection => {
     prescription.disease="5";
     prescription.price="3"
     prescription.prescribing_doctor=doctor;
-    prescription.ticker_number="8";
+    prescription.ticket_number="8";
     await connection.manager.save(prescription);
 
     const prescription2=new Prescription();
@@ -69,12 +70,11 @@ createConnection().then(async connection => {
     prescription2.disease="5";
     prescription2.price="3"
     prescription2.prescribing_doctor=doctor;
-    prescription2.ticker_number="8";
+    prescription2.ticket_number="8";
     await connection.manager.save(prescription2);
 
     //insert odontology
     const odontology=new Odontology();
-    odontology.firstName="08/05";
     odontology.actual_disease="Gripe";
     odontology.odontogram="5";
     odontology.prescription=prescription;
@@ -82,7 +82,6 @@ createConnection().then(async connection => {
     await connection.manager.save(odontology);
 
     const odontology2=new Odontology();
-    odontology2.firstName="Persona";
     odontology2.actual_disease="Ninguna";
     odontology2.prescription=prescription2;
     odontology2.odontogram="7";
@@ -92,11 +91,15 @@ createConnection().then(async connection => {
     //insert evolution
     const evolution=new Evolution();
     evolution.establishment="Ginecologia";
+    evolution.initial_observations="Ginecologia";
+    evolution.mc="Ginecologia";
     evolution.prescription=prescription;
     await connection.manager.save(evolution);
     
     const evolution2=new Evolution();
     evolution2.establishment="Ginecologia";
+    evolution2.initial_observations="Ginecologia";
+    evolution2.mc="Ginecologia";
     evolution2.prescription=prescription2;
     await connection.manager.save(evolution2);
 
@@ -104,6 +107,7 @@ createConnection().then(async connection => {
     const vital1=new Vital();
     vital1.especiality="Odontología";
     vital1.attention_hour="07:20";
+    vital1.attention_date=today;
     vital1.temperature_end=70.5;
     vital1.temperature_start=65.8;
     vital1.sistolica=120;
@@ -121,6 +125,7 @@ createConnection().then(async connection => {
     const vital2=new Vital();
     vital2.especiality="Ginecologia";
     vital2.attention_hour="07:20";
+    vital2.attention_date=today;
     vital2.temperature_end=7.5;
     vital2.temperature_start=5.8;
     vital2.sistolica=115;
@@ -139,22 +144,29 @@ createConnection().then(async connection => {
     const hce1 = new Hce();
     hce1.evolution=[evolution,evolution2];
     hce1.odontology=[odontology,odontology2];
+    hce1.vital=[vital1,vital2];
     await connection.manager.save(hce1);
+
+    //insert info
+    const info = new Info();
+    info.secondName="1134010697";
+    info.secondSurname = "Pepe";
+    info.age=2;
+    info.gender='M';
+    info.e_mail="pepe@gmail.com";
+    await connection.manager.save(info);
 
     //insert patient
     const patient = new Patient();
-    patient.ci="1134010197";
+    patient.ci="1134010697";
     patient.firstName = "Pepe";
-    patient.lastName="Torres";
-    patient.age=2;
-    patient.gender='M';
-    patient.e_mail="pepe@gmail.com";
+    patient.surName = "torres";
     patient.appointment_hour="07:01";
     patient.appointment_date=today;
     patient.type="ISSFA";
     patient.asigned_speciality="Ginecologia";
-    patient.vitals=vital1;
     patient.electronic_history=hce1;
+    patient.info=info;
 
     const errors = await validate(patient);
     if (errors.length > 0) {

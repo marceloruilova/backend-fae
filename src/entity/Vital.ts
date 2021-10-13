@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column,ManyToOne} from "typeorm";
 import {IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
+import {Hce} from "./Hce";
 
 @Entity()
 export class Vital {
@@ -12,7 +13,11 @@ export class Vital {
 
     @Column()
     @IsMilitaryTime()
-    attention_hour: string;
+    attention_hour: string;    
+    
+    @Column()
+    @IsDateString()
+    attention_date: string;
 
     @Column({type:'decimal'})
     temperature_start: number;
@@ -50,4 +55,6 @@ export class Vital {
     @Column({type:'decimal'})
     pc: number;
 
+    @ManyToOne(() => Hce, hce => hce.vital)
+    hce: Hce;
 }

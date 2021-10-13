@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column,OneToOne,JoinColumn, OneToMany, Timestamp} from "typeorm";
 import {Contains,Length, IsEmail, MinLength,MaxLength, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 import {Hce}from "./Hce";
-import {Vital} from "./Vital";
+import {Info}from "./Info";
 
 @Entity()
 export class Patient {
@@ -20,19 +20,7 @@ export class Patient {
 
     @Column()
     @Length(2, 25)
-    lastName: string;
-
-    @Column({nullable:true})
-    @Min(0)
-    @Max(120)
-    age: number;
-
-    @Column({nullable:true})
-    gender: string;
-
-    @Column({nullable:true})
-    @IsEmail()
-    e_mail: string;
+    surName: string;
 
     @Column()
     @IsMilitaryTime()
@@ -49,12 +37,12 @@ export class Patient {
     @Column()
     asigned_speciality: string;
 
-    @OneToOne(() => Vital,{cascade:true})
-    @JoinColumn()
-    vitals: Vital;
-
     @OneToOne(() => Hce)
     @JoinColumn()
     electronic_history: Hce;
+    
+    @OneToOne(() => Info)
+    @JoinColumn()
+    info: Info;
 
 }

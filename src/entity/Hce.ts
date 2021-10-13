@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne,JoinColumn,OneToMany } from "typeorm";
-import {Patient} from "./Patient";
+import {Vital} from "./Vital";
 import { Evolution } from "./Evolution";
 import { Odontology } from "./Odontology";
 
@@ -9,9 +9,12 @@ export class Hce {
     @PrimaryGeneratedColumn()
     id: number;
     
-    @OneToMany(() => Odontology, odontology => odontology.hce)
+    @OneToMany(() => Odontology, odontology => odontology.hce,{cascade:true})
     odontology: Odontology[];
 
-    @OneToMany(() => Evolution, evolution => evolution.hce)
+    @OneToMany(() => Evolution, evolution => evolution.hce,{cascade:true})
     evolution: Evolution[];
+
+    @OneToMany(() => Vital, vital => vital.hce,{cascade:true})
+    vital: Vital[];
 }

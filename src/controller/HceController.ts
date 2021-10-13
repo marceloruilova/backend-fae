@@ -4,23 +4,26 @@ import {Hce} from "../entity/Hce";
 
 export class HceController {
 
-    private hceRepository = getRepository(Hce);
     
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.hceRepository.find({relations:["vitals","patient"]});
+    static async all(request: Request, response: Response, next: NextFunction) {
+        let hceRepository = getRepository(Hce);
+        return response.send(hceRepository.find({relations:["vitals","patient"]}));
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.hceRepository.findOne(request.params.id);
+    static async one(request: Request, response: Response, next: NextFunction) {
+        let hceRepository = getRepository(Hce);
+        return response.send(hceRepository.findOne(request.params.id));
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.hceRepository.save(request.body);
+    static async save(request: Request, response: Response, next: NextFunction) {
+        let hceRepository = getRepository(Hce);
+        return response.send(hceRepository.save(request.body));
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
-        let hceToRemove = await this.hceRepository.findOne(request.params.id);
-        await this.hceRepository.remove(hceToRemove);
+    static async remove(request: Request, response: Response, next: NextFunction) {
+        let hceRepository = getRepository(Hce);
+        let hceToRemove = await hceRepository.findOne(request.params.id);
+        await hceRepository.remove(hceToRemove);
     }
 
 }
