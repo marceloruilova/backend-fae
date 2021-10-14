@@ -1,24 +1,18 @@
 {
-   "type": "oracle",
-   "host": "localhost",
-   "username": "fae",
-   "password": "fae123", 
-   "database": "fae_hcedb", 
-   "port": 1521,
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      "src/entity/**/*.ts"
-   ],
-   "migrations": [
-      "src/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
-   ],
-   "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-   }
+  "type": "oracle",
+  "host": "localhost",
+  "username": "fae",
+  "password": "fae123",
+  "database": "fae_hcedb",
+  "port": 1521,
+  "synchronize": true,
+  "logging": false,
+  "entities": ["src/entity/**/*.ts"],
+  "migrations": ["src/migration/**/*.ts"],
+  "subscribers": ["src/subscriber/**/*.ts"],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "src/migration",
+    "subscribersDir": "src/subscriber"
+  }
 }
