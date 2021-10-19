@@ -37,7 +37,7 @@ export class Patient {
     @Column()
     asigned_speciality: string;
 
-    @OneToOne(() => Hce)
+    @OneToOne(() => Hce,{cascade:true,nullable:false})
     @JoinColumn()
     electronic_history: Hce;
     

@@ -14,6 +14,7 @@ import {Odontology} from "./entity/Odontology";
 import { Inventory } from "./entity/Inventory";
 import { Prescription } from "./entity/Prescription";
 import { Info } from "./entity/Info";
+import { User } from "./entity/User";
 
 createConnection().then(async connection => {
 
@@ -36,7 +37,7 @@ createConnection().then(async connection => {
     
     const timeElapsed = new Date();
     const today = timeElapsed.toISOString().substring(0,10);
-
+/*
     //insert inventory
    const inventory=new Inventory();
    inventory.due_date="08/05";
@@ -61,6 +62,8 @@ createConnection().then(async connection => {
     prescription.cie10="08/05";
     prescription.disease="5";
     prescription.price="3"
+    prescription.medicine=["Amoxilina 5gramos","Tabletas 3"];
+    prescription.notes="nada";
     prescription.prescribing_doctor=doctor;
     prescription.ticket_number="8";
     await connection.manager.save(prescription);
@@ -68,6 +71,7 @@ createConnection().then(async connection => {
     const prescription2=new Prescription();
     prescription2.cie10="08/05";
     prescription2.disease="5";
+    prescription2.medicine=["Amoxilina 5gramos","Tabletas 3"];
     prescription2.price="3"
     prescription2.prescribing_doctor=doctor;
     prescription2.ticket_number="8";

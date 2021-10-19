@@ -8,8 +8,10 @@ export class PatientController {
         let patientRepository = getRepository(Patient);
         const aux=await patientRepository.find(
                                             {relations:
-                                                ["vitals",
+                                                [
+                                                "info",
                                                 "electronic_history",
+                                                "electronic_history.vital",
                                                 "electronic_history.evolution",
                                                 "electronic_history.odontology",
                                                 "electronic_history.evolution.prescription",
@@ -23,10 +25,13 @@ export class PatientController {
     //get patients by date
     static async bydate(request: Request, response: Response, next: NextFunction) {
         const timeElapsed = new Date();
-        let patientRepository = getRepository(Patient);
+        const patientRepository = getRepository(Patient);
         
         const today = timeElapsed.toISOString().substring(0,10);
-        const aux=await patientRepository.find({where:{appointment_date:today}});
+        const aux=await patientRepository.find({where:{appointment_date:today},relations:["electronic_history",
+                                                                                            "electronic_history.vital",
+                                                                                            "electronic_history.odontology",
+                                                                                            "electronic_history.evolution"]});
         return response.send(aux);
     }
 
@@ -35,8 +40,9 @@ export class PatientController {
         
         const aux=await patientRepository.findOne(request.params.id,
                                         {relations:
-                                        ["vitals",
+                                        [
                                         "electronic_history",
+                                        "electronic_history.vital",
                                         "electronic_history.evolution",
                                         "electronic_history.odontology",
                                         "electronic_history.evolution.prescription",
@@ -48,8 +54,14 @@ export class PatientController {
     }
 
     static async save(request: Request, response: Response, next: NextFunction) {
-        let patientRepository = getRepository(Patient);
-        return response.send(patientRepository.save(request.body));
+        const patientRepository = getRepository(Patient);
+        try{
+            await patientRepository.save(request.body);
+            return response.status(200).send(request.body);
+        }catch(error){
+            response.status(409).send(error);
+            return;
+        }
     }
 
     static async remove(request: Request, response: Response, next: NextFunction) {

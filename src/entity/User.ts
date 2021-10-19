@@ -22,7 +22,7 @@ import {
     @Column()
     @Length(4, 100)
     password: string;
-  
+    
     @Column()
     @IsNotEmpty()
     role: string;

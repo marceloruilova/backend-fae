@@ -20,7 +20,7 @@ export class Odontology {
     @ManyToOne(() => Hce, hce => hce.odontology)
     hce: Hce;
 
-    @OneToOne(() => Prescription)
+    @OneToOne(() => Prescription,{cascade:true})
     @JoinColumn()
     prescription: Prescription;
 }

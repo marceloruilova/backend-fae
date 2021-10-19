@@ -35,7 +35,7 @@ export class Evolution {
     @ManyToOne(() => Hce, hce => hce.evolution)
     hce: Hce;
 
-    @OneToOne(() => Prescription)
+    @OneToOne(() => Prescription,{cascade:true})
     @JoinColumn()
     prescription: Prescription;
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne,JoinColumn,OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn,OneToMany } from "typeorm";
 import {Vital} from "./Vital";
 import { Evolution } from "./Evolution";
 import { Odontology } from "./Odontology";
@@ -17,4 +17,12 @@ export class Hce {
 
     @OneToMany(() => Vital, vital => vital.hce,{cascade:true})
     vital: Vital[];
+    
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

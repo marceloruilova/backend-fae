@@ -7,6 +7,12 @@ export class Prescription {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column("simple-array")
+    medicine: string[];
+
+    @Column({nullable:true})
+    notes: string;
+
     @Column()
     cie10: string;
 
