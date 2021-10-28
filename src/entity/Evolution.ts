@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn,CreateDateColumn,UpdateDateColumn} from "typeorm";
 import {Hce} from "./Hce";
 import { Prescription } from "./Prescription";
 
@@ -13,6 +13,12 @@ export class Evolution {
 
     @Column()
     establishment:string;
+
+    @Column()
+    month:string;
+
+    @Column()
+    year:string;
 
     @Column({nullable:true})
     mc:string;
@@ -38,4 +44,12 @@ export class Evolution {
     @OneToOne(() => Prescription,{cascade:true})
     @JoinColumn()
     prescription: Prescription;
+
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column,OneToOne,JoinColumn, OneToMany, Timestamp} from "typeorm";
-import {Contains,Length, IsEmail, MinLength,MaxLength, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
+import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,OneToOne,JoinColumn, OneToMany, Timestamp} from "typeorm";
+import {Contains,Length, IsEmail, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 import {Hce}from "./Hce";
 import {Info}from "./Info";
 
@@ -37,12 +37,21 @@ export class Patient {
     @Column()
     asigned_speciality: string;
 
-    @OneToOne(() => Hce,{cascade:true,nullable:false})
+    @OneToOne(() => Hce,hce=>hce.patient,{cascade:true})
     @JoinColumn()
     electronic_history: Hce;
     
     @OneToOne(() => Info)
     @JoinColumn()
-    info: Info;
+    info: Info;  
+
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
+  
 
 }

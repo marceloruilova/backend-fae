@@ -4,24 +4,48 @@ import {Evolution} from "../entity/Evolution";
 
 export class EvolutionController {
 
-    private evolutionRepository = getRepository(Evolution);
-
-    async all(request: Request, response: Response, next: NextFunction) {
-        const aux=await this.evolutionRepository.find();
-        return aux;
+    static async all(request: Request, response: Response, next: NextFunction) {
+        const evolutionRepository = getRepository(Evolution);
+        const aux=await evolutionRepository.find(
+            {relations:
+                [
+                "hce",
+            ]});
+        return response.send(aux);
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.evolutionRepository.findOne(request.params.id);
+    static async one(request: Request, response: Response, next: NextFunction) {
+        let evolutionRepository = getRepository(Evolution);
+        const aux=await evolutionRepository.findOne(request.params.id);
+        return response.send(aux);
+    }
+    //get evolution by month
+    static async bymonth(request: Request, response: Response, next: NextFunction) {
+        const evolutionRepository = getRepository(Evolution);
+        const month = request.query.month;
+        const year = request.query.year;
+        const aux=await evolutionRepository.find({where:{month:month,year:year},
+            relations:["hce",                                                                                
+            "hce.patient"
+            ]});
+    return response.send(aux);
+}
+
+    static async save(request: Request, response: Response, next: NextFunction) {
+        const evolutionRepository = getRepository(Evolution);
+        try{
+            await evolutionRepository.save(request.body);
+            return response.status(200).send(request.body);
+        }catch(error){
+            response.status(409).send(error);
+            return;
+        }
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.evolutionRepository.save(request.body);
-    }
-
-    async remove(request: Request, response: Response, next: NextFunction) {
-        let evolutionToRemove = await this.evolutionRepository.findOne(request.params.id);
-        await this.evolutionRepository.remove(evolutionToRemove);
+    static async remove(request: Request, response: Response, next: NextFunction) {
+        let evolutionRepository = getRepository(Evolution);
+        let evolutionToRemove = await evolutionRepository.findOne(request.params.id);
+        await evolutionRepository.remove(evolutionToRemove);
     }
 
 }

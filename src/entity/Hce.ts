@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn,OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column,OneToOne,CreateDateColumn,UpdateDateColumn,OneToMany } from "typeorm";
 import {Vital} from "./Vital";
 import { Evolution } from "./Evolution";
 import { Odontology } from "./Odontology";
+import { Patient } from "./Patient";
 
 @Entity()
 export class Hce {
@@ -17,7 +18,10 @@ export class Hce {
 
     @OneToMany(() => Vital, vital => vital.hce,{cascade:true})
     vital: Vital[];
-    
+
+    @OneToOne(() => Patient, patient => patient.electronic_history) // specify inverse side as a second parameter
+    patient: Patient;
+
     @Column()
     @CreateDateColumn()
     createdAt: Date;

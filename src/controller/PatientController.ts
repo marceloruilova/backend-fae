@@ -14,10 +14,6 @@ export class PatientController {
                                                 "electronic_history.vital",
                                                 "electronic_history.evolution",
                                                 "electronic_history.odontology",
-                                                "electronic_history.evolution.prescription",
-                                                "electronic_history.odontology.prescription",
-                                                "electronic_history.evolution.prescription.prescribing_doctor",
-                                                "electronic_history.odontology.prescription.prescribing_doctor",
                                             ]});
         return response.send(aux);
     }
@@ -45,10 +41,6 @@ export class PatientController {
                                         "electronic_history.vital",
                                         "electronic_history.evolution",
                                         "electronic_history.odontology",
-                                        "electronic_history.evolution.prescription",
-                                        "electronic_history.odontology.prescription",
-                                        "electronic_history.evolution.prescription.prescribing_doctor",
-                                        "electronic_history.odontology.prescription.prescribing_doctor",
                                         ]});
         return response.send(aux);
     }

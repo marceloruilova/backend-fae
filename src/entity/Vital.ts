@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column,ManyToOne} from "typeorm";
-import {IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
+import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,ManyToOne} from "typeorm";
+import {IsMilitaryTime, IsDateString, IsNumberString, isDateString} from "class-validator";
 import {Hce} from "./Hce";
 
 @Entity()
@@ -57,4 +57,13 @@ export class Vital {
 
     @ManyToOne(() => Hce, hce => hce.vital)
     hce: Hce;
+      
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
+  
 }

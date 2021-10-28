@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, Timestamp} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn,UpdateDateColumn} from "typeorm";
 import {Contains,Length, IsEmail, MinLength,MaxLength, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 
 @Entity()
@@ -26,5 +26,13 @@ export class Info {
     @Column({nullable:true})
     @IsEmail()
     e_mail: string;
+
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
 
 }

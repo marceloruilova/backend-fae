@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, OneToMany} from "typeorm";
 import {Doctor} from "./Doctor";
 
 @Entity()
@@ -24,5 +24,13 @@ export class Inventory {
 
     @OneToMany(() => Doctor, doctor => doctor.inventory)
     doctor: Doctor[];
+
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
 
 }

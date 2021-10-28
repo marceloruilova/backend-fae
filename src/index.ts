@@ -59,22 +59,15 @@ createConnection().then(async connection => {
  
     //insert prescription
     const prescription=new Prescription();
-    prescription.cie10="08/05";
-    prescription.disease="5";
-    prescription.price="3"
     prescription.medicine=["Amoxilina 5gramos","Tabletas 3"];
     prescription.notes="nada";
     prescription.prescribing_doctor=doctor;
-    prescription.ticket_number="8";
     await connection.manager.save(prescription);
 
     const prescription2=new Prescription();
-    prescription2.cie10="08/05";
-    prescription2.disease="5";
     prescription2.medicine=["Amoxilina 5gramos","Tabletas 3"];
-    prescription2.price="3"
+    prescription.notes="nada";
     prescription2.prescribing_doctor=doctor;
-    prescription2.ticket_number="8";
     await connection.manager.save(prescription2);
 
     //insert odontology
@@ -96,6 +89,8 @@ createConnection().then(async connection => {
     const evolution=new Evolution();
     evolution.establishment="Ginecologia";
     evolution.initial_observations="Ginecologia";
+    evolution.month=timeElapsed.getMonth().toString();
+    evolution.year=timeElapsed.getFullYear().toString();
     evolution.mc="Ginecologia";
     evolution.prescription=prescription;
     await connection.manager.save(evolution);
@@ -103,6 +98,8 @@ createConnection().then(async connection => {
     const evolution2=new Evolution();
     evolution2.establishment="Ginecologia";
     evolution2.initial_observations="Ginecologia";
+    evolution2.month=timeElapsed.getMonth().toString();
+    evolution2.year=timeElapsed.getFullYear().toString();
     evolution2.mc="Ginecologia";
     evolution2.prescription=prescription2;
     await connection.manager.save(evolution2);
@@ -162,7 +159,7 @@ createConnection().then(async connection => {
 
     //insert patient
     const patient = new Patient();
-    patient.ci="1134010697";
+    patient.ci="1133011697";
     patient.firstName = "Pepe";
     patient.surName = "torres";
     patient.appointment_hour="07:01";
@@ -171,22 +168,14 @@ createConnection().then(async connection => {
     patient.asigned_speciality="Ginecologia";
     patient.electronic_history=hce1;
     patient.info=info;
-
+    
     const errors = await validate(patient);
     if (errors.length > 0) {
-        throw new Error(`Validation failed!`); 
+        throw new Error(`Validation failed!`);
     } else {
         await connection.manager.save(patient);
     }
-
-
-    /*const hce2 = new Hce();
-    hce2.odontology=odontology2;
-    hce2.vitals=vital2;
-    hce2.evolution=[evolution];
-    await connection.manager.save(hce2);*/
-
-
+*/
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
 }).catch(error => console.log(error));

@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne,OneToOne,JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, ManyToOne,OneToOne,JoinColumn} from "typeorm";
 import {Prescription} from "./Prescription";
 import {Hce} from "./Hce";
 
@@ -23,4 +23,13 @@ export class Odontology {
     @OneToOne(() => Prescription,{cascade:true})
     @JoinColumn()
     prescription: Prescription;
+
+    @Column()
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @Column()
+    @UpdateDateColumn()
+    updatedAt: Date;
+  
 }
