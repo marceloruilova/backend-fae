@@ -4,23 +4,34 @@ import {Doctor} from "../entity/Doctor";
 
 export class DoctorController {
 
-    private doctorRepository = getRepository(Doctor);
 
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.doctorRepository.find();
+    static async all(request: Request, response: Response, next: NextFunction) {
+        const doctorRepository = getRepository(Doctor);
+        const aux= await doctorRepository.find();
+        return response.send(aux);
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.doctorRepository.findOne(request.params.id);
+    static async one(request: Request, response: Response, next: NextFunction) {
+        const doctorRepository = getRepository(Doctor);
+        const aux= await doctorRepository.findOne(request.params.id);
+        return response.send(aux);
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.doctorRepository.save(request.body);
+    static async save(request: Request, response: Response, next: NextFunction) {
+        const doctorRepository = getRepository(Doctor);
+        try{
+            await doctorRepository.save(request.body);
+            return response.status(200).send(request.body);
+        }catch(error){
+            response.status(409).send(error);
+            return;
+        }
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
-        let doctorToRemove = await this.doctorRepository.findOne(request.params.id);
-        await this.doctorRepository.remove(doctorToRemove);
+    static async remove(request: Request, response: Response, next: NextFunction) {
+        const doctorRepository = getRepository(Doctor);
+        let doctorToRemove = await doctorRepository.findOne(request.params.id);
+        await doctorRepository.remove(doctorToRemove);
     }
 
 }

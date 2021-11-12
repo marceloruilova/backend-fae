@@ -4,23 +4,29 @@ import {Prescription} from "../entity/Prescription";
 
 export class PrescriptionController {
 
-    private prescriptionRepository = getRepository(Prescription);
 
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.prescriptionRepository.find();
+    static async all(request: Request, response: Response, next: NextFunction) {
+        let prescriptionRepository = getRepository(Prescription);
+        const aux=await prescriptionRepository.find();
+        return response.send(aux);
+   }
+
+    static async one(request: Request, response: Response, next: NextFunction) {
+        let prescriptionRepository = getRepository(Prescription);
+        return response.send(prescriptionRepository.findOne(request.params.id));
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.prescriptionRepository.findOne(request.params.id);
+    static async savecie(request: Request, response: Response, next: NextFunction) {
+        let prescriptionRepository = getRepository(Prescription);
+        let aux=await prescriptionRepository.findOne(request.body.prescriptionid,{relations:["prescribing_doctor"]})
+        aux.cie10=request.body.prescribing_doctor[0];
+        return response.send(await prescriptionRepository.save(aux));
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.prescriptionRepository.save(request.body);
-    }
-
-    async remove(request: Request, response: Response, next: NextFunction) {
-        let prescriptionToRemove = await this.prescriptionRepository.findOne(request.params.id);
-        await this.prescriptionRepository.remove(prescriptionToRemove);
+    static async remove(request: Request, response: Response, next: NextFunction) {
+        let prescriptionRepository = getRepository(Prescription);
+        let prescriptionToRemove = await prescriptionRepository.findOne(request.params.id);
+        await prescriptionRepository.remove(prescriptionToRemove);
     }
 
 }

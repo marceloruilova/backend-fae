@@ -37,7 +37,7 @@ createConnection().then(async connection => {
     
     const timeElapsed = new Date();
     const today = timeElapsed.toISOString().substring(0,10);
-/*
+
     //insert inventory
    const inventory=new Inventory();
    inventory.due_date="08/05";
@@ -51,9 +51,7 @@ createConnection().then(async connection => {
     const doctor=new Doctor();
     doctor.doctor_first_name="Marco";
     doctor.doctor_last_name="Ananit";
-    doctor.especiality="Odontología";
     doctor.ci="1721515";
-    doctor.title="Odontología";
     doctor.inventory=inventory;
     await connection.manager.save(doctor);
  
@@ -61,12 +59,22 @@ createConnection().then(async connection => {
     const prescription=new Prescription();
     prescription.medicine=["Amoxilina 5gramos","Tabletas 3"];
     prescription.notes="nada";
+    prescription.quantity=5;
+    prescription.price=5.2;
+    prescription.cie10={code:"B05",disease:"mocos"};
+    prescription.total_price=prescription.quantity*prescription.price;
+    prescription.ticket_number="4";
     prescription.prescribing_doctor=doctor;
     await connection.manager.save(prescription);
 
     const prescription2=new Prescription();
     prescription2.medicine=["Amoxilina 5gramos","Tabletas 3"];
-    prescription.notes="nada";
+    prescription2.notes="nada";
+    prescription2.quantity=5;
+    prescription2.price=5.2;
+    prescription2.cie10={code:"A00",disease:"mocos"};
+    prescription2.total_price=prescription2.quantity*prescription2.price;
+    prescription2.ticket_number="4";
     prescription2.prescribing_doctor=doctor;
     await connection.manager.save(prescription2);
 
@@ -150,7 +158,7 @@ createConnection().then(async connection => {
 
     //insert info
     const info = new Info();
-    info.secondName="1134010697";
+    info.secondName="1137010157";
     info.secondSurname = "Pepe";
     info.age=2;
     info.gender='M';
@@ -159,7 +167,7 @@ createConnection().then(async connection => {
 
     //insert patient
     const patient = new Patient();
-    patient.ci="1133011697";
+    patient.ci="1113550017";
     patient.firstName = "Pepe";
     patient.surName = "torres";
     patient.appointment_hour="07:01";
@@ -175,7 +183,7 @@ createConnection().then(async connection => {
     } else {
         await connection.manager.save(patient);
     }
-*/
+
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
 }).catch(error => console.log(error));

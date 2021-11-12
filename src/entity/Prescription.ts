@@ -1,6 +1,5 @@
 import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,OneToOne,ManyToOne, JoinColumn} from "typeorm";
 import {Doctor} from "./Doctor";
-import {Cie10} from "./Cie";
 
 @Entity()
 export class Prescription {
@@ -14,11 +13,22 @@ export class Prescription {
     @Column({nullable:true})
     notes: string;
     
-    @OneToOne(()=>Cie10)
-    @JoinColumn()
-    cie10:Cie10;
+    @Column("simple-json")
+    cie10: { code: string, disease: string };
 
-    @ManyToOne(() => Doctor,doctor=>doctor.prescription)
+    @Column()
+    quantity: number;
+   
+    @Column({type:'decimal'})
+    price: number;
+   
+    @Column({type:'decimal'})
+    total_price: number;
+   
+    @Column({nullable:true})
+    ticket_number: string;
+
+    @ManyToOne(() => Doctor,doctor=>doctor.prescription,{cascade:true})
     prescribing_doctor: Doctor;
       
     @Column()

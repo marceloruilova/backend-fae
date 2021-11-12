@@ -9,13 +9,15 @@ export class EvolutionController {
         const aux=await evolutionRepository.find(
             {relations:
                 [
-                "hce",
+                "prescription",
+                "prescription.cie10",
+                "prescription.prescribing_doctor",
             ]});
         return response.send(aux);
     }
 
     static async one(request: Request, response: Response, next: NextFunction) {
-        let evolutionRepository = getRepository(Evolution);
+        const evolutionRepository = getRepository(Evolution);
         const aux=await evolutionRepository.findOne(request.params.id);
         return response.send(aux);
     }
@@ -26,7 +28,9 @@ export class EvolutionController {
         const year = request.query.year;
         const aux=await evolutionRepository.find({where:{month:month,year:year},
             relations:["hce",                                                                                
-            "hce.patient"
+            "hce.patient",
+            "prescription",
+            "prescription.prescribing_doctor",
             ]});
     return response.send(aux);
 }

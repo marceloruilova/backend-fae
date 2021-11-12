@@ -17,12 +17,6 @@ export class Doctor {
     @Column()
     ci: string;
     
-    @Column()
-    title: string;
-    //heredar especialidad
-    @Column()
-    especiality: string;
-    
     @ManyToOne(() => Inventory, inventory => inventory.doctor)
     inventory: Inventory;
         
