@@ -15,6 +15,7 @@ import { Inventory } from "./entity/Inventory";
 import { Prescription } from "./entity/Prescription";
 import { Info } from "./entity/Info";
 import { User } from "./entity/User";
+import { InfoPrcrptn } from "./entity/InfoPrcrptn";
 
 createConnection().then(async connection => {
 
@@ -40,55 +41,68 @@ createConnection().then(async connection => {
 
     //insert inventory
    const inventory=new Inventory();
-   inventory.due_date="08/05";
-   inventory.name="5";
-   inventory.presentation="3"
+   inventory.due_date=today;
+   inventory.name="Paracetamol";
+   inventory.presentation="Capsulas"
    inventory.stock="8";
-   inventory.concentration="8";
-   await connection.manager.save(inventory);   
+   inventory.concentration="250mg";
+   await connection.manager.save(inventory);  
+
+   const inventory2=new Inventory();
+   inventory2.due_date=today;
+   inventory2.name="Amocilina";
+   inventory2.presentation="Crema"
+   inventory2.stock="4";
+   inventory2.concentration="none";
+   await connection.manager.save(inventory2);   
 
     //insert doctor
     const doctor=new Doctor();
     doctor.doctor_first_name="Marco";
     doctor.doctor_last_name="Ananit";
     doctor.ci="1721515";
-    doctor.inventory=inventory;
     await connection.manager.save(doctor);
  
+    const infoprescription=new InfoPrcrptn();
+    infoprescription.quantity=5;
+    infoprescription.price=5.2;
+    infoprescription.cie10={code:"A00",disease:"mocos"};
+    infoprescription.ticket_number="4";
+    infoprescription.cie10={code:"A00",disease:"Colera"};
+    await connection.manager.save(infoprescription);
+  
+    const infoprescription2=new InfoPrcrptn();
+    infoprescription2.quantity=5;
+    infoprescription2.price=5.2;
+    infoprescription2.cie10={code:"B05",disease:"mocos"};
+    infoprescription2.ticket_number="4";
+    infoprescription2.cie10={code:"A00",disease:"Colera"};
+    await connection.manager.save(infoprescription2);
+
     //insert prescription
     const prescription=new Prescription();
     prescription.medicine=["Amoxilina 5gramos","Tabletas 3"];
     prescription.notes="nada";
-    prescription.quantity=5;
-    prescription.price=5.2;
-    prescription.cie10={code:"B05",disease:"mocos"};
-    prescription.total_price=prescription.quantity*prescription.price;
-    prescription.ticket_number="4";
     prescription.prescribing_doctor=doctor;
+    prescription.info_prescription=infoprescription2;
     await connection.manager.save(prescription);
 
     const prescription2=new Prescription();
     prescription2.medicine=["Amoxilina 5gramos","Tabletas 3"];
     prescription2.notes="nada";
-    prescription2.quantity=5;
-    prescription2.price=5.2;
-    prescription2.cie10={code:"A00",disease:"mocos"};
-    prescription2.total_price=prescription2.quantity*prescription2.price;
-    prescription2.ticket_number="4";
     prescription2.prescribing_doctor=doctor;
+    prescription2.info_prescription=infoprescription;
     await connection.manager.save(prescription2);
 
     //insert odontology
     const odontology=new Odontology();
     odontology.actual_disease="Gripe";
     odontology.odontogram="5";
-    odontology.prescription=prescription;
     odontology.record="La madre tiene menopausia";
     await connection.manager.save(odontology);
 
     const odontology2=new Odontology();
     odontology2.actual_disease="Ninguna";
-    odontology2.prescription=prescription2;
     odontology2.odontogram="7";
     odontology2.record="Padre enfermo";
     await connection.manager.save(odontology2);
@@ -103,7 +117,7 @@ createConnection().then(async connection => {
     evolution.prescription=prescription;
     await connection.manager.save(evolution);
     
-    const evolution2=new Evolution();
+   /* const evolution2=new Evolution();
     evolution2.establishment="Ginecologia";
     evolution2.initial_observations="Ginecologia";
     evolution2.month=timeElapsed.getMonth().toString();
@@ -111,7 +125,7 @@ createConnection().then(async connection => {
     evolution2.mc="Ginecologia";
     evolution2.prescription=prescription2;
     await connection.manager.save(evolution2);
-
+*/
     //insert vital
     const vital1=new Vital();
     vital1.especiality="Odontología";
@@ -151,7 +165,7 @@ createConnection().then(async connection => {
     
     //insert hces
     const hce1 = new Hce();
-    hce1.evolution=[evolution,evolution2];
+    hce1.evolution=[evolution];
     hce1.odontology=[odontology,odontology2];
     hce1.vital=[vital1,vital2];
     await connection.manager.save(hce1);
@@ -167,7 +181,7 @@ createConnection().then(async connection => {
 
     //insert patient
     const patient = new Patient();
-    patient.ci="1113550017";
+    patient.ci="1113221117";
     patient.firstName = "Pepe";
     patient.surName = "torres";
     patient.appointment_hour="07:01";

@@ -1,5 +1,5 @@
 import { Router,Request,Response } from "express";
-import { PrescriptionController} from "../controller/PrescriptionController";
+import { InventoryController} from "../controller/InventoryController";
 import { checkJwt } from "../middlewares/checkJwt";
 import { checkRole } from "../middlewares/checkRole";
 
@@ -7,23 +7,17 @@ import { checkRole } from "../middlewares/checkRole";
   
   //Get all users
   router.get("/",
-  PrescriptionController.all);
+  InventoryController.all);
 
   // Get one user
   router.get(
     "/:id([0-9]+)",
-    PrescriptionController.one
+    InventoryController.one
   );
 
-  //add new info to the prescription
-  router.post("/saveinfo", 
-  PrescriptionController.saveinfo
-  );
-
-  //add a new doctor to the prescription
-  router.post("/savedoctor", 
-  PrescriptionController.savedoctor
-  );
+  //Create a new user
+  router.post("/", 
+  InventoryController.save );
 
   //Edit one user
 /*  router.patch(
@@ -35,7 +29,7 @@ import { checkRole } from "../middlewares/checkRole";
   //Delete one user
   router.delete(
     "/:id([0-9]+)",
-    PrescriptionController.remove
+    InventoryController.remove
   );
 
   export default router;

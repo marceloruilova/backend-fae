@@ -10,7 +10,7 @@ export class EvolutionController {
             {relations:
                 [
                 "prescription",
-                "prescription.cie10",
+                "prescription.info_prescription",
                 "prescription.prescribing_doctor",
             ]});
         return response.send(aux);
@@ -30,6 +30,7 @@ export class EvolutionController {
             relations:["hce",                                                                                
             "hce.patient",
             "prescription",
+            "prescription.info_prescription",
             "prescription.prescribing_doctor",
             ]});
     return response.send(aux);

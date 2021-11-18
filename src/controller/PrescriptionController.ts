@@ -16,10 +16,17 @@ export class PrescriptionController {
         return response.send(prescriptionRepository.findOne(request.params.id));
     }
 
-    static async savecie(request: Request, response: Response, next: NextFunction) {
+    static async saveinfo(request: Request, response: Response, next: NextFunction) {
+        let prescriptionRepository = getRepository(Prescription);
+        let aux=await prescriptionRepository.findOne(request.body.prescriptionid,{relations:["info_prescription"]})
+        aux.info_prescription=request.body.prescription.info_prescription;
+        return response.send(await prescriptionRepository.save(aux));
+    }
+
+    static async savedoctor(request: Request, response: Response, next: NextFunction) {
         let prescriptionRepository = getRepository(Prescription);
         let aux=await prescriptionRepository.findOne(request.body.prescriptionid,{relations:["prescribing_doctor"]})
-        aux.cie10=request.body.prescribing_doctor[0];
+        aux.prescribing_doctor=request.body.prescribing_doctor;
         return response.send(await prescriptionRepository.save(aux));
     }
 

@@ -8,7 +8,7 @@ export class Inventory {
     id: number;
 
     @Column()
-    stock: string;
+    stock: number;
 
     @Column()
     name: string;
@@ -21,9 +21,6 @@ export class Inventory {
 
     @Column()
     due_date: string;
-
-    @OneToMany(() => Doctor, doctor => doctor.inventory)
-    doctor: Doctor[];
 
     @Column()
     @CreateDateColumn()

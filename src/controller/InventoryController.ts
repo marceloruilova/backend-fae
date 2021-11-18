@@ -4,23 +4,33 @@ import {Inventory} from "../entity/Inventory";
 
 export class InventoryController {
 
-    private inventoryRepository = getRepository(Inventory);
 
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.inventoryRepository.find();
+    static async all(request: Request, response: Response, next: NextFunction) {
+        const inventoryRepository = getRepository(Inventory);
+        const aux=await inventoryRepository.find();
+        return response.send(aux);
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.inventoryRepository.findOne(request.params.id);
+    static async one(request: Request, response: Response, next: NextFunction) {
+        let inventoryRepository = getRepository(Inventory);
+        return response.send(inventoryRepository.findOne(request.params.id));
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.inventoryRepository.save(request.body);
+    static async save(request: Request, response: Response, next: NextFunction) {
+        const inventoryRepository = getRepository(Inventory);
+        try{
+            await inventoryRepository.save(request.body.inventory);
+            return response.status(200).send(request.body.inventory);
+        }catch(error){
+            response.status(409).send(error);
+            return;
+        }
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
-        let inventoryToRemove = await this.inventoryRepository.findOne(request.params.id);
-        await this.inventoryRepository.remove(inventoryToRemove);
+    static async remove(request: Request, response: Response, next: NextFunction) {
+        let inventoryRepository = getRepository(Inventory);
+        let inventoryToRemove = await inventoryRepository.findOne(request.params.id);
+        await inventoryRepository.remove(inventoryToRemove);
     }
 
 }

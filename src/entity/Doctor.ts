@@ -17,9 +17,6 @@ export class Doctor {
     @Column()
     ci: string;
     
-    @ManyToOne(() => Inventory, inventory => inventory.doctor)
-    inventory: Inventory;
-        
     @OneToMany(()=>Prescription,prescription=>prescription.prescribing_doctor)
     prescription:Prescription;
 
