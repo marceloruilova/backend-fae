@@ -9,9 +9,6 @@ export class Evolution {
     id: number;
 
     @Column()
-    initial_observations:string;
-
-    @Column()
     establishment:string;
 
     @Column()
@@ -20,22 +17,22 @@ export class Evolution {
     @Column()
     year:string;
 
-    @Column({nullable:true})
+    @Column()
     mc:string;
 
-    @Column({nullable:true})
+    @Column()
     enf:string;
 
-    @Column({nullable:true})
+    @Column()
     qx:string;
 
-    @Column({nullable:true})
+    @Column()
     alergies:string;
 
-    @Column({nullable:true})
+    @Column()
     objective:string;
 
-    @Column({nullable:true})
+    @Column()
     subjective:string;
 
     @ManyToOne(() => Hce, hce => hce.evolution)

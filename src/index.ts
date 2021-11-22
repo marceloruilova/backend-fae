@@ -39,12 +39,12 @@ createConnection().then(async connection => {
     const timeElapsed = new Date();
     const today = timeElapsed.toISOString().substring(0,10);
 
-    //insert inventory
+ /*   //insert inventory
    const inventory=new Inventory();
    inventory.due_date=today;
    inventory.name="Paracetamol";
    inventory.presentation="Capsulas"
-   inventory.stock="8";
+   inventory.stock=8;
    inventory.concentration="250mg";
    await connection.manager.save(inventory);  
 
@@ -52,7 +52,7 @@ createConnection().then(async connection => {
    inventory2.due_date=today;
    inventory2.name="Amocilina";
    inventory2.presentation="Crema"
-   inventory2.stock="4";
+   inventory2.stock=4;
    inventory2.concentration="none";
    await connection.manager.save(inventory2);   
 
@@ -110,22 +110,25 @@ createConnection().then(async connection => {
     //insert evolution
     const evolution=new Evolution();
     evolution.establishment="Ginecologia";
-    evolution.initial_observations="Ginecologia";
     evolution.month=timeElapsed.getMonth().toString();
     evolution.year=timeElapsed.getFullYear().toString();
     evolution.mc="Ginecologia";
+    evolution.enf="Ginecologia";
+    evolution.qx="Ginecologia";
+    evolution.alergies="Ginecologia";
+    evolution.objective="Ginecologia";
+    evolution.subjective="Ginecologia";
     evolution.prescription=prescription;
     await connection.manager.save(evolution);
     
    /* const evolution2=new Evolution();
     evolution2.establishment="Ginecologia";
-    evolution2.initial_observations="Ginecologia";
     evolution2.month=timeElapsed.getMonth().toString();
     evolution2.year=timeElapsed.getFullYear().toString();
     evolution2.mc="Ginecologia";
     evolution2.prescription=prescription2;
     await connection.manager.save(evolution2);
-*/
+
     //insert vital
     const vital1=new Vital();
     vital1.especiality="Odontología";
@@ -184,19 +187,19 @@ createConnection().then(async connection => {
     patient.ci="1113221117";
     patient.firstName = "Pepe";
     patient.surName = "torres";
-    patient.appointment_hour="07:01";
+    patient.appointment_hour="07:00";
     patient.appointment_date=today;
     patient.type="ISSFA";
-    patient.asigned_speciality="Ginecologia";
+    patient.asigned_speciality="Rayos X";
     patient.electronic_history=hce1;
-    patient.info=info;
+    patient.info=info;*/
     
-    const errors = await validate(patient);
+/*    const errors = await validate(patient);
     if (errors.length > 0) {
         throw new Error(`Validation failed!`);
     } else {
         await connection.manager.save(patient);
-    }
+    }*/
 
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 

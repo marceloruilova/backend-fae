@@ -17,7 +17,18 @@ export class PatientController {
                                             ]});
         return response.send(aux);
     }
+
+        //get patients by date
+    static async update(request: Request, response: Response, next: NextFunction) {
+        const timeElapsed = new Date();
+        const patientRepository = getRepository(Patient);
+            
+        const today = timeElapsed.toISOString().substring(0,10);
+        const aux=await patientRepository.update({ci:request.body.ci},request.body);
+        return response.send(aux);
+    }
     
+
     //get patients by date
     static async bydate(request: Request, response: Response, next: NextFunction) {
         const timeElapsed = new Date();

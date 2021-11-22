@@ -44,6 +44,12 @@ import { checkRole } from "../middlewares/checkRole";
   );
 
   // Get one patient bydate
+  router.put(
+    "/update",
+    PatientController.update
+  );
+
+  // Get one patient bydate
   router.get(
     "/bydate",
     PatientController.bydate
