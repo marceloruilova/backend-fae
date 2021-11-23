@@ -1,7 +1,6 @@
 import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,OneToOne,JoinColumn, OneToMany, Timestamp} from "typeorm";
-import {Contains,Length, IsEmail, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
+import {Contains,Length, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
 import {Hce}from "./Hce";
-import {Info}from "./Info";
 
 @Entity()
 export class Patient {
@@ -23,6 +22,14 @@ export class Patient {
     surName: string;
 
     @Column()
+    @Min(0)
+    @Max(120)
+    age: number;
+
+    @Column()
+    gender: string;
+
+    @Column()
     @IsMilitaryTime()
     appointment_hour: string;
 
@@ -31,7 +38,7 @@ export class Patient {
     appointment_date: string;
 
     @Column()
-    @Contains('ISSFA')
+    @Contains('IESS')
     type: string;
 
     @Column()
@@ -41,10 +48,6 @@ export class Patient {
     @JoinColumn()
     electronic_history: Hce;
     
-    @OneToOne(() => Info)
-    @JoinColumn()
-    info: Info;  
-
     @Column()
     @CreateDateColumn()
     createdAt: Date;
