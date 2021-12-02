@@ -9,9 +9,6 @@ export class InfoPrcrptn {
     @Column("simple-json")
     cie10: { code: string, disease: string };
 
-    @Column()
-    quantity: number;
-   
     @Column({type:'decimal'})
     price: number;
    

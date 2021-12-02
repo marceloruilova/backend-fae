@@ -13,7 +13,6 @@ import {Doctor} from "./entity/Doctor";
 import {Odontology} from "./entity/Odontology";
 import { Inventory } from "./entity/Inventory";
 import { Prescription } from "./entity/Prescription";
-import { Info } from "./entity/Info";
 import { User } from "./entity/User";
 import { InfoPrcrptn } from "./entity/InfoPrcrptn";
 
@@ -37,9 +36,11 @@ createConnection().then(async connection => {
     // insert new data for test
     
     const timeElapsed = new Date();
+    const timeElapsed2 = new Date(0);
     const today = timeElapsed.toISOString().substring(0,10);
-
- /*   //insert inventory
+    const today2 = timeElapsed2.toISOString().substring(0,10);
+/*
+    //insert inventory
    const inventory=new Inventory();
    inventory.due_date=today;
    inventory.name="Paracetamol";
@@ -64,7 +65,6 @@ createConnection().then(async connection => {
     await connection.manager.save(doctor);
  
     const infoprescription=new InfoPrcrptn();
-    infoprescription.quantity=5;
     infoprescription.price=5.2;
     infoprescription.cie10={code:"A00",disease:"mocos"};
     infoprescription.ticket_number="4";
@@ -72,7 +72,6 @@ createConnection().then(async connection => {
     await connection.manager.save(infoprescription);
   
     const infoprescription2=new InfoPrcrptn();
-    infoprescription2.quantity=5;
     infoprescription2.price=5.2;
     infoprescription2.cie10={code:"B05",disease:"mocos"};
     infoprescription2.ticket_number="4";
@@ -121,11 +120,16 @@ createConnection().then(async connection => {
     evolution.prescription=prescription;
     await connection.manager.save(evolution);
     
-   /* const evolution2=new Evolution();
+    const evolution2=new Evolution();
     evolution2.establishment="Ginecologia";
     evolution2.month=timeElapsed.getMonth().toString();
     evolution2.year=timeElapsed.getFullYear().toString();
     evolution2.mc="Ginecologia";
+    evolution2.enf="Ginecologia";
+    evolution2.qx="Ginecologia";
+    evolution2.alergies="Ginecologia";
+    evolution2.objective="Ginecologia";
+    evolution2.subjective="Ginecologia";
     evolution2.prescription=prescription2;
     await connection.manager.save(evolution2);
 
@@ -151,7 +155,7 @@ createConnection().then(async connection => {
     const vital2=new Vital();
     vital2.especiality="Ginecologia";
     vital2.attention_hour="07:20";
-    vital2.attention_date=today;
+    vital2.attention_date=today2;
     vital2.temperature_end=7.5;
     vital2.temperature_start=5.8;
     vital2.sistolica=115;
@@ -173,32 +177,24 @@ createConnection().then(async connection => {
     hce1.vital=[vital1,vital2];
     await connection.manager.save(hce1);
 
-    //insert info
-    const info = new Info();
-    info.secondName="1137010157";
-    info.secondSurname = "Pepe";
-    info.age=2;
-    info.gender='M';
-    info.e_mail="pepe@gmail.com";
-    await connection.manager.save(info);
-
     //insert patient
     const patient = new Patient();
-    patient.ci="1113221117";
+    patient.ci="1113776688";
     patient.firstName = "Pepe";
     patient.surName = "torres";
-    patient.appointment_hour="07:00";
+    patient.age = 15;
+    patient.gender = "M";
+    patient.appointment_hour="09:00";
     patient.appointment_date=today;
-    patient.type="ISSFA";
+    patient.type="IESS";
     patient.asigned_speciality="Rayos X";
     patient.electronic_history=hce1;
-    patient.info=info;*/
     
-/*    const errors = await validate(patient);
+    const errors = await validate(patient);
     if (errors.length > 0) {
         throw new Error(`Validation failed!`);
     } else {
-        await connection.manager.save(patient);
+        await //connection.manager.save(patient);
     }*/
 
     console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");

@@ -3,32 +3,31 @@ import {UserController} from "../controller/UserController";
 import { checkJwt } from "../middlewares/checkJwt";
 import { checkRole } from "../middlewares/checkRole";
 
-  const router = Router();
+const router = Router();
+  
+//Get all users
+router.get("/",
+[checkJwt, checkRole(["ADMIN"])],
+UserController.all);
 
-  //Get all users
-  router.get('/', function(req,res){
-    res.json({'message' : 'Ping Successfull'});
-  });
-  // Get one user
- /* router.get(
-    "/:id([0-9]+)",
-    User.one
-  );
+// Get one user
+router.get(
+  "/:id([0-9]+)",
+  [checkJwt, checkRole(["ADMIN"])],
+  UserController.one
+);
 
-  //Create a new user
-  router.post("/", User.save);
-
-  //Edit one user
-  /*router.patch(
-    "/:id([0-9]+)",
-    [checkJwt, checkRole(["ADMIN"])],
-    UserController.editUser
-  );*/
+//add new info to the prescription
+router.post("/save",
+[checkJwt, checkRole(["ADMIN"])],
+UserController.save
+);
 
   //Delete one user
- /* router.delete(
+  router.delete(
     "/:id([0-9]+)",
-    User.remove
-  );*/
+    [checkJwt, checkRole(["ADMIN"])],
+    UserController.remove
+  );
 
 export default router;

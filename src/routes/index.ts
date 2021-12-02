@@ -10,7 +10,7 @@ import inventory from "./inventory";
 
 const routes = Router();
 
-//routes.use("/auth", auth);
+routes.use("/auth", auth);
 routes.use('/user',user);
 routes.use('/patient',patient);
 routes.use('/hce',hce);

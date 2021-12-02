@@ -13,7 +13,7 @@ export class Vital {
 
     @Column()
     @IsMilitaryTime()
-    attention_hour: string;    
+    attention_hour: string;
     
     @Column()
     @IsDateString()

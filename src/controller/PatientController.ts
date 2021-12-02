@@ -5,11 +5,10 @@ import {Patient} from "../entity/Patient";
 export class PatientController {
 
     static async all (request: Request, response: Response, next: NextFunction) {
-        let patientRepository = getRepository(Patient);
+        const patientRepository = getRepository(Patient);
         const aux=await patientRepository.find(
                                             {relations:
                                                 [
-                                                "info",
                                                 "electronic_history",
                                                 "electronic_history.vital",
                                                 "electronic_history.evolution",
@@ -18,7 +17,7 @@ export class PatientController {
         return response.send(aux);
     }
 
-        //get patients by date
+
     static async update(request: Request, response: Response, next: NextFunction) {
         const timeElapsed = new Date();
         const patientRepository = getRepository(Patient);
