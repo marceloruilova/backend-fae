@@ -20,18 +20,41 @@ createConnection().then(async connection => {
 
     // create express app
     const app = express();
-    var cors = require('cors');
+    var https = require('https');
+    var cors =require('cors')
+    var http = require('http');
+    var fs = require('fs');
     app.use(bodyParser.json());
     app.use(cors());
     // register express routes from defined application routes
-    //app.use("/",routes);
-
     app.use("/",routes);
     // setup express app here
     // ...
+    
+    app.set('secPort',3443);
+    app.set('Port',3000);
+    
+    /**
+     * Create HTTPS server.
+     */ 
+     
+    var options = {
+      key: fs.readFileSync('./src/certificates/ia.key'),
+      cert: fs.readFileSync('./src/certificates/ia.crt')
+    };
+    
+    var secureServer = https.createServer(options,app);
+    var server = http.createServer(app);
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(3000)
+    
+    secureServer.listen(app.get('secPort'), () => {
+       console.log('Server listening on port '+app.get('secPort'));
+    });
 
     // start express server
-    app.listen(3000);
 
     // insert new data for test
     
@@ -197,6 +220,5 @@ createConnection().then(async connection => {
         await //connection.manager.save(patient);
     }*/
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
 }).catch(error => console.log(error));

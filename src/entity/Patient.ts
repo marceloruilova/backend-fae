@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,OneToOne,JoinColumn, OneToMany, Timestamp} from "typeorm";
-import {Contains,Length, Min, Max, IsMilitaryTime, IsDate, IsDateString, IsNumberString, isDateString} from "class-validator";
+import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,OneToOne,JoinColumn} from "typeorm";
+import {Contains,Length, Min, Max, IsMilitaryTime, IsDateString, IsNumberString} from "class-validator";
 import {Hce}from "./Hce";
 
 @Entity()
@@ -27,6 +27,9 @@ export class Patient {
     age: number;
 
     @Column()
+    @Contains('M')
+    @Contains('F')
+    @Contains('Otro')
     gender: string;
 
     @Column()

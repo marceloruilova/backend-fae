@@ -20,11 +20,6 @@ import { checkRole } from "../middlewares/checkRole";
   PrescriptionController.saveinfo
   );
 
-  //add a new doctor to the prescription
-  router.post("/savedoctor", 
-  PrescriptionController.savedoctor
-  );
-
   //Delete one user
   router.delete(
     "/:id([0-9]+)",

@@ -23,13 +23,6 @@ export class PrescriptionController {
         return response.send(await prescriptionRepository.save(aux));
     }
 
-    static async savedoctor(request: Request, response: Response, next: NextFunction) {
-        let prescriptionRepository = getRepository(Prescription);
-        let aux=await prescriptionRepository.findOne(request.body.prescriptionid,{relations:["prescribing_doctor"]})
-        aux.prescribing_doctor=request.body.prescribing_doctor;
-        return response.send(await prescriptionRepository.save(aux));
-    }
-
     static async remove(request: Request, response: Response, next: NextFunction) {
         let prescriptionRepository = getRepository(Prescription);
         let prescriptionToRemove = await prescriptionRepository.findOne(request.params.id);

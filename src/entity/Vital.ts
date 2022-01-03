@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,ManyToOne} from "typeorm";
-import {IsMilitaryTime, IsDateString, IsNumberString, isDateString} from "class-validator";
+import {IsMilitaryTime, IsDateString} from "class-validator";
 import {Hce} from "./Hce";
 
 @Entity()

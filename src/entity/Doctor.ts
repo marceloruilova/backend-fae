@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column,ManyToOne,OneToMany,CreateDateColumn,UpdateDateColumn} from "typeorm";
-import {Inventory} from "./Inventory";
+import {Entity, PrimaryGeneratedColumn, Column,OneToMany,CreateDateColumn,UpdateDateColumn} from "typeorm";
 import {Prescription} from "./Prescription";
+import {Length, IsNumberString} from "class-validator";
 
 @Entity()
 export class Doctor {
@@ -9,16 +9,20 @@ export class Doctor {
     id: number;
 
     @Column()
+    @Length(2, 25)
     doctor_first_name: string;
 
     @Column()
+    @Length(2, 25)
     doctor_last_name: string;
 
-    @Column()
+    @Column({unique:true})
+    @IsNumberString()
+    @Length(10,10)
     ci: string;
     
     @OneToMany(()=>Prescription,prescription=>prescription.prescribing_doctor)
-    prescription:Prescription;
+    prescription:Prescription[];
 
     @Column()
     @CreateDateColumn()

@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column,OneToOne,ManyToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column} from "typeorm";
 
 @Entity()
 export class InfoPrcrptn {
@@ -7,13 +7,13 @@ export class InfoPrcrptn {
     id: number;
     
     @Column("simple-json")
-    cie10: { code: string, disease: string };
+    cie10: { code: number, disease: string };
 
     @Column({type:'decimal'})
     price: number;
    
     @Column({nullable:true})
-    ticket_number: string;
+    ticket_number: number;
 
     @Column()
     @CreateDateColumn()

@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn, OneToMany} from "typeorm";
-import {Doctor} from "./Doctor";
+import {Entity, PrimaryGeneratedColumn, Column,CreateDateColumn,UpdateDateColumn} from "typeorm";
+import { IsDateString} from "class-validator";
 
 @Entity()
 export class Inventory {
@@ -20,6 +20,7 @@ export class Inventory {
     concentration: string;
 
     @Column()
+    @IsDateString()
     due_date: string;
 
     @Column()

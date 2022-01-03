@@ -28,6 +28,13 @@ export class DoctorController {
         }
     }
 
+    static async saveprescription(request: Request, response: Response, next: NextFunction) {
+        let doctorRepository = getRepository(Doctor);
+        let aux=await doctorRepository.findOne({where:{ci:request.body.doctor_ci},relations:["prescription"]})
+        aux.prescription=[...aux.prescription,request.body.prescription];
+        return response.send(await doctorRepository.save(aux));
+    }
+
     static async remove(request: Request, response: Response, next: NextFunction) {
         const doctorRepository = getRepository(Doctor);
         let doctorToRemove = await doctorRepository.findOne(request.params.id);

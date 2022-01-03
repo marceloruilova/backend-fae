@@ -1,40 +1,15 @@
 
-/*export const Patient=[{
-    method: "get",
-    route: "/patients",
-    controller: PatientController,
-    action: "all"
-},{
-    method: "get",
-    route: "/patients/date",
-    controller: PatientController,
-    action: "bydate"
-}, {
-    method: "get",
-    route: "/patients/:id",
-    controller: PatientController,
-    action: "one"
-}, {
-    method: "post",
-    route: "/patients",
-    controller: PatientController,
-    action: "save"
-}, {
-    method: "delete",
-    route: "/patients/:id",
-    controller: PatientController,
-    action: "remove"
-}]
-*/ 
-import { Router,Request,Response } from "express";
+import { Router } from "express";
 import {PatientController} from "../controller/PatientController";
 import { checkJwt } from "../middlewares/checkJwt";
 import { checkRole } from "../middlewares/checkRole";
+import{corsOptionsDelegate} from './cors'
 
   const router = Router();
+  var cors = require('cors')
   
   //Get all users
-  router.get("/",
+  router.get("/",cors(corsOptionsDelegate),
     PatientController.all);
 
   // Get one user

@@ -37,6 +37,36 @@ export class AuthController {
         //Send the jwt in the response
         response.send({user,jwt_token:token});
     }
+    static async register(req: Request, res: Response, next: NextFunction) {
+         //Get parameters from the body
+  let { username, password, email, role } = req.body;
+  let user = new User();
+  user.username = username;
+  user.password = password;
+  user.email = email;
+  user.role = role;
+  //Validade if the parameters are ok
+  const errors = await validate(user);
+  if (errors.length > 0) {
+    res.status(400).send(errors);
+    return;
+  }
+
+  //Hash the password, to securely store on DB
+  user.hashPassword();
+
+  //Try to save. If fails, the username is already in use
+  const userRepository = getRepository(User);
+  try {
+    await userRepository.save(user);
+  } catch (e) {
+    res.status(409).send("username already in use");
+    return;
+  }
+
+  //If all ok, send 201 response
+  return res.status(201).send("User created");
+}
     static changePassword = async (req: Request, res: Response) => {
         //Get ID from JWT
         const id = res.locals.jwtPayload.userId;
