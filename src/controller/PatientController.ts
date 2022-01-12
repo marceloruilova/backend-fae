@@ -30,11 +30,8 @@ export class PatientController {
 
     //get patients by date
     static async bydate(request: Request, response: Response, next: NextFunction) {
-        const timeElapsed = new Date();
         const patientRepository = getRepository(Patient);
-        
-        const today = timeElapsed.toISOString().substring(0,10);
-        const aux=await patientRepository.find({where:{appointment_date:today},relations:["electronic_history",
+        const aux=await patientRepository.find({where:{appointment_date:request.query.date},relations:["electronic_history",
                                                                                             "electronic_history.vital",
                                                                                             "electronic_history.odontology",
                                                                                             "electronic_history.evolution"]});
