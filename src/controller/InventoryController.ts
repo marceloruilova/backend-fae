@@ -29,8 +29,17 @@ export class InventoryController {
 
     static async remove(request: Request, response: Response, next: NextFunction) {
         let inventoryRepository = getRepository(Inventory);
-        let inventoryToRemove = await inventoryRepository.findOne(request.params.id);
+        let inventoryToRemove:Inventory;
+        try{
+            inventoryToRemove = await inventoryRepository.findOne(request.params.id);
+        }catch(error){
+            console.log(error)
+            response.status(404).send("Medicine not found");
+            return;
+        }
         await inventoryRepository.remove(inventoryToRemove);
+        response.status(204).send();
+
     }
 
 }

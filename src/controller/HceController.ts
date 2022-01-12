@@ -31,21 +31,24 @@ export class HceController {
         let hceRepository = getRepository(Hce);
         let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["vital"]})
         aux.vital=[request.body.vital];
-        return response.send(await hceRepository.save(aux));
+        await hceRepository.save(aux).catch(error=>response.status(404).send(error));
+        return response.status(202).send();
     }
 
     static async saveevol(request: Request, response: Response, next: NextFunction) {
         let hceRepository = getRepository(Hce);
-        let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["evolution"]})
+        let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["evolution"]});
         aux.evolution=[request.body.evolution];
-        return response.send(await hceRepository.save(aux));
+        await hceRepository.save(aux).catch(error=>response.status(404).send(error));
+        return response.status(202).send();
     }
 
     static async saveodon(request: Request, response: Response, next: NextFunction) {
         let hceRepository = getRepository(Hce);
         let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["odontology"]})
         aux.odontology=[request.body.odontology];
-        return response.send(await hceRepository.save(aux));
+        await hceRepository.save(aux).catch(error=>response.status(404).send(error));
+        return response.status(202).send();
     }
 
     static async remove(request: Request, response: Response, next: NextFunction) {
