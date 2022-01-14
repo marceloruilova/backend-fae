@@ -3,13 +3,12 @@ import { Router } from "express";
 import {PatientController} from "../controller/PatientController";
 import { checkJwt } from "../middlewares/checkJwt";
 import { checkRole } from "../middlewares/checkRole";
-import{corsOptionsDelegate} from './cors'
+import {corsWithOptions,corsWithoutOptions} from './cors'
 
   const router = Router();
-  var cors = require('cors')
   
   //Get all users
-  router.get("/",cors(corsOptionsDelegate),
+  router.get("/",corsWithOptions,
     PatientController.all);
 
   // Get one user

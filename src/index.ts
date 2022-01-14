@@ -21,11 +21,9 @@ createConnection().then(async connection => {
     // create express app
     const app = express();
     var https = require('https');
-    var cors =require('cors')
     var http = require('http');
     var fs = require('fs');
     app.use(bodyParser.json());
-    app.use(cors());
     // register express routes from defined application routes
     app.use("/",routes);
     // setup express app here
@@ -54,6 +52,14 @@ createConnection().then(async connection => {
        console.log('Server listening on port '+app.get('secPort'));
     });
 
+    app.all('*', (req, res, next) => {
+        if (req.secure) {
+          return next();
+        }
+        else {
+          res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
+        }
+      });
     // start express server
 
     // insert new data for test
