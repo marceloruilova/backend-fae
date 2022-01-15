@@ -22,7 +22,9 @@ createConnection().then(async connection => {
     const app = express();
     var https = require('https');
     var http = require('http');
+    var cors = require('cors');
     var fs = require('fs');
+    app.use(cors());
     app.use(bodyParser.json());
     // register express routes from defined application routes
     app.use("/",routes);

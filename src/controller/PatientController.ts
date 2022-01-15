@@ -34,6 +34,7 @@ export class PatientController {
         const aux=await patientRepository.find({where:{appointment_date:request.query.date},relations:["electronic_history",
                                                                                             "electronic_history.vital",
                                                                                             "electronic_history.odontology",
+                                                                                            "electronic_history.evolution.prescription",
                                                                                             "electronic_history.evolution"]});
         return response.send(aux);
     }
