@@ -19,8 +19,11 @@ export class PrescriptionController {
     static async saveinfo(request: Request, response: Response, next: NextFunction) {
         let prescriptionRepository = getRepository(Prescription);
         let aux=await prescriptionRepository.findOne(request.body.prescriptionid,{relations:["info_prescription"]})
-        aux.info_prescription=request.body.prescription.info_prescription;
-        return response.send(await prescriptionRepository.save(aux));
+        try{aux.info_prescription=request.body.prescription.info_prescription;
+        return response.send(await prescriptionRepository.save(aux));}
+        catch(error){
+            return response.status(404).send(error)
+        }
     }
 
     static async remove(request: Request, response: Response, next: NextFunction) {

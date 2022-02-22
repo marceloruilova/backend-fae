@@ -15,6 +15,7 @@ import { Inventory } from "./entity/Inventory";
 import { Prescription } from "./entity/Prescription";
 import { User } from "./entity/User";
 import { InfoPrcrptn } from "./entity/InfoPrcrptn";
+import {corsWithOptions} from './routes/cors';
 
 createConnection().then(async connection => {
 
@@ -22,9 +23,8 @@ createConnection().then(async connection => {
     const app = express();
     var https = require('https');
     var http = require('http');
-    var cors = require('cors');
     var fs = require('fs');
-    app.use(cors());
+    app.use(corsWithOptions);
     app.use(bodyParser.json());
     // register express routes from defined application routes
     app.use("/",routes);

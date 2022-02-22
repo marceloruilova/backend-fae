@@ -29,18 +29,22 @@ export class HceController {
 
     static async savevital(request: Request, response: Response, next: NextFunction) {
         let hceRepository = getRepository(Hce);
-        let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["vital"]})
-        aux.vital=[request.body.vital];
-        await hceRepository.save(aux).catch(error=>response.status(404).send(error));
+        let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["vital"]});
+        try{aux.vital=[request.body.vital];
+        await hceRepository.save(aux)
         return response.status(202).send();
+        }catch(error){        
+        return response.status(404).send(error)}
     }
 
     static async saveevol(request: Request, response: Response, next: NextFunction) {
         let hceRepository = getRepository(Hce);
         let aux=await hceRepository.findOne(request.body.electronic_history_id,{relations:["evolution"]});
-        aux.evolution=[request.body.evolution];
-        await hceRepository.save(aux).catch(error=>response.status(404).send(error));
+        try{aux.evolution=[request.body.evolution];
+        await hceRepository.save(aux);
         return response.status(202).send();
+    }catch(error){
+        return response.status(404).send(error)}
     }
 
     static async saveodon(request: Request, response: Response, next: NextFunction) {

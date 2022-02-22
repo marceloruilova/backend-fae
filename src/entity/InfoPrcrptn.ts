@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column} from "typeorm";
+import {Entity,PrimaryColumn, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Column} from "typeorm";
 
 @Entity()
 export class InfoPrcrptn {
@@ -12,7 +12,7 @@ export class InfoPrcrptn {
     @Column({type:'decimal'})
     price: number;
    
-    @Column({nullable:true})
+    @PrimaryColumn() 
     ticket_number: number;
 
     @Column()

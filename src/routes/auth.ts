@@ -8,7 +8,7 @@ const router = Router();
 router.post("/login", AuthController.login);
 
 //Login route
-router.post("/register", 
+router.post("/register",
 [checkJwt, checkRole(["ADMIN"])],AuthController.register);
 
 //Change my password
